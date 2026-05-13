@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #f5f1e8;
+    --surface: #efeadf;
+    --foreground: #2d241e;
+    --primary: #2d241e;
+    --border: #d2cec5;
+    --muted: #8a8377;
+    --accent: #8a3c2c;
+  }
+
+  .dark {
+    --background: #121212;
+    --surface: #1e1e1e;
+    --foreground: #f5f1e8;
+    --primary: #f5f1e8;
+    --border: #333333;
+    --muted: #a1a1aa;
+    --accent: #d97757;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply antialiased;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .glass-dock {
+    @apply bg-surface/80 backdrop-blur-md border border-border/50 shadow-sm;
+  }
+}
