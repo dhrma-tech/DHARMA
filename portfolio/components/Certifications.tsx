@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { profile } from "../data/profile";
+import type { Certification } from "../data/profile";
 
 export default function Certifications() {
   if (!profile.certifications || profile.certifications.length === 0) return null;
@@ -24,11 +26,16 @@ export default function Certifications() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {profile.certifications.map((cert: any, index: number) => (
+          {profile.certifications.map((cert: Certification, index: number) => (
             <div key={index} className="flex flex-col p-8 rounded-[20px] bg-surface hover:shadow-sm border border-transparent hover:border-border transition-all h-full min-h-[200px]">
-              <div className="w-12 h-12 rounded-full bg-[#0a66c2] flex items-center justify-center shrink-0 text-white shadow-sm mb-6">
-                {/* Temporary fallback to a letter if no specific icon system is used */}
-                <span className="font-bold text-xl">{cert.name ? cert.name.charAt(0) : "C"}</span>
+              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm mb-6 overflow-hidden border border-border/50">
+                {cert.logo ? (
+                  <Image src={cert.logo} alt={cert.issuer} width={48} height={48} className="object-contain w-full h-full p-1.5" />
+                ) : (
+                  <div className="w-full h-full rounded-full bg-[#0a66c2] flex items-center justify-center text-white">
+                    <span className="font-bold text-xl">{cert.name ? cert.name.charAt(0) : "C"}</span>
+                  </div>
+                )}
               </div>
               
               <h4 className="font-medium text-foreground text-xl leading-snug mb-3 pr-4">{cert.name}</h4>

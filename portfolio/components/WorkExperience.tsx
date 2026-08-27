@@ -53,10 +53,6 @@ function WorkCard({ job }: { job: typeof profile.work[0] }) {
       <p className="text-sm text-foreground/80 leading-relaxed flex-grow">
         {job.description}
       </p>
-      
-      <div className="text-[11px] font-bold text-accent transition-opacity mt-6 opacity-80 group-hover:opacity-100 flex justify-end">
-        Click to learn more &rarr;
-      </div>
     </div>
   );
 }

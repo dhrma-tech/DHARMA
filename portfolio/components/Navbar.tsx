@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Home, Book, Sun, Moon } from "lucide-react";
+import { Home, Sun, Moon } from "lucide-react";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { profile } from "../data/profile";
 import { useState, useEffect } from "react";
@@ -36,22 +36,18 @@ export default function Navbar() {
       className="fixed bottom-8 inset-x-0 z-50 flex justify-center px-6"
     >
       <nav className="glass-dock rounded-2xl px-5 py-3 flex items-center gap-5 text-foreground shadow-sm border border-border/80">
-        <Link href="/" className="hover:opacity-70 transition-opacity">
+        <Link href="/" aria-label="Home" className="hover:opacity-70 transition-opacity">
           <Home className="w-[18px] h-[18px]" strokeWidth={2} />
         </Link>
-        <Link href="#blog" className="hover:opacity-70 transition-opacity">
-          <Book className="w-[18px] h-[18px]" strokeWidth={2} />
-        </Link>
-
         <div className="w-[1px] h-5 bg-border/80 mx-1"></div>
 
-        <Link href={profile.github} target="_blank" className="hover:opacity-70 transition-opacity">
+        <Link href={profile.github} target="_blank" aria-label="GitHub" className="hover:opacity-70 transition-opacity">
           <FaGithub className="w-[18px] h-[18px]" />
         </Link>
-        <Link href={profile.linkedin} target="_blank" className="hover:opacity-70 transition-opacity">
+        <Link href={profile.linkedin} target="_blank" aria-label="LinkedIn" className="hover:opacity-70 transition-opacity">
           <FaLinkedin className="w-[18px] h-[18px]" />
         </Link>
-        <Link href={profile.twitter} target="_blank" className="hover:opacity-70 transition-opacity">
+        <Link href={profile.twitter} target="_blank" aria-label="X (Twitter)" className="hover:opacity-70 transition-opacity">
           <FaXTwitter className="w-[18px] h-[18px]" />
         </Link>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { profile } from "../data/profile";
+import { profile, type Project } from "../data/profile";
 import { useState } from "react";
 
 export default function Projects() {
@@ -80,7 +80,7 @@ export default function Projects() {
   );
 }
 
-function ProjectCard({ project }: { project: any }) {
+function ProjectCard({ project }: { project: Project }) {
   return (
     <div 
       className="group relative p-8 rounded-[20px] bg-surface hover:shadow-sm border border-transparent hover:border-border transition-all flex flex-col h-full min-h-[220px]"
@@ -101,11 +101,15 @@ function ProjectCard({ project }: { project: any }) {
         {project.description}
       </p>
       
-      {project.url && (
+      {project.url ? (
         <a href={project.url} target="_blank" rel="noreferrer" className="text-[11px] font-bold text-accent transition-opacity flex justify-end mt-6 opacity-80 hover:opacity-100">
           View Repository &rarr;
         </a>
-      )}
+      ) : project.private ? (
+        <div className="text-[11px] font-bold text-muted flex justify-end mt-6">
+          Private Repository
+        </div>
+      ) : null}
     </div>
   );
 }

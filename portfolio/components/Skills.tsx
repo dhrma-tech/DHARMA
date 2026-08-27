@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { profile } from "../data/profile";
+import { useState } from "react";
 
 export default function Skills() {
   return (
@@ -33,16 +34,27 @@ export default function Skills() {
 }
 
 function MarqueeRow({ items, direction }: { items: string[], direction: "left" | "right" }) {
+  const [paused, setPaused] = useState(false);
   const scrollItems = [...items, ...items, ...items, ...items];
 
   return (
-    <div className="flex whitespace-nowrap overflow-hidden group">
-      <div className={`flex gap-4 ${direction === "left" ? "animate-scroll" : "animate-scroll"} hover:[animation-play-state:paused] w-max`}
-        style={direction === "right" ? { animationDirection: "reverse" } : {}}
+    <div
+      className="flex whitespace-nowrap overflow-hidden group"
+      onClick={() => setPaused((p) => !p)}
+      role="list"
+      aria-label="Scrolling list of skills, tap to pause"
+    >
+      <div
+        className="flex gap-4 animate-scroll hover:[animation-play-state:paused] w-max"
+        style={{
+          animationDirection: direction === "right" ? "reverse" : undefined,
+          animationPlayState: paused ? "paused" : undefined,
+        }}
       >
         {scrollItems.map((item, idx) => (
-          <div 
+          <div
             key={idx}
+            role="listitem"
             className="px-5 py-2.5 rounded-full border border-border bg-surface font-mono text-sm font-semibold text-foreground/80 hover:text-foreground hover:bg-border/50 hover:shadow-sm transition-all"
           >
             {item.toLowerCase()}
