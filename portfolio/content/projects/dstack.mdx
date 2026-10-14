@@ -1,0 +1,42 @@
+---
+title: DStack
+summary: CLI workflow orchestration
+description: A CLI-native, API-first workflow orchestration system that turns a rough product idea into a structured AI-assisted build pipeline.
+year: 2026
+dates: May 2026 – Present
+status: In progress
+stack: [TypeScript, pnpm monorepo, Gemini API, Vitest]
+category: AI
+featured: true
+order: 1
+repo: https://github.com/dhrma-tech/DSTACK
+---
+
+## Problem
+
+Going from a rough product idea to a shipped build with AI assistants tends to be ad hoc: planning, architecture, implementation, refinement and deployment happen in scattered prompts with no shared structure.
+
+<Todo>Rewrite the problem in your own words — who hits it, and why existing tools don't solve it.</Todo>
+
+## What I built
+
+A CLI-native, API-first workflow orchestration system that turns a rough product idea into a structured AI-assisted build pipeline: planning, architecture, implementation, refinement, and deployment.
+
+- Built as a pnpm TypeScript monorepo.
+- Gemini-backed, with an offline "fake provider" mode so it runs without an API key.
+- Tested with Vitest.
+
+## Architecture
+
+<Todo>Add an architecture diagram (e.g. /projects/dstack/architecture.png) showing the pipeline stages, the provider interface, and the CLI/API surfaces.</Todo>
+
+## Key decisions
+
+- **Offline fake provider.** The pipeline can run end to end without an API key, which keeps tests deterministic and lets anyone try it.
+- **CLI-native and API-first.** The same pipeline is reachable from the terminal and programmatically.
+
+<Todo>Add the trade-offs behind the monorepo layout and why Gemini was the first provider.</Todo>
+
+## Results / what I learned
+
+<Todo>Add results — usage, test coverage, a build you shipped with it — and one or two lessons.</Todo>

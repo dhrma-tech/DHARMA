@@ -58,17 +58,28 @@ export interface Certification {
 }
 
 export type ProjectCategory = "AI" | "Web";
+export type ProjectStatus = "In progress" | "Shipped";
 
-export interface Project {
-  slug: string;
+/** Frontmatter of content/projects/*.mdx */
+export interface ProjectFrontmatter {
   title: string;
   summary: string;
   description: string;
-  dates: string;
   year: number;
-  language: string;
+  /** Original date range, e.g. "May 2026 – Present" */
+  dates: string;
+  status: ProjectStatus;
+  stack: string[];
   category: ProjectCategory;
   featured: boolean;
+  /** Sort position in the list (ascending). */
+  order: number;
   repo?: string;
+  live?: string;
+  cover?: string;
   private?: boolean;
+}
+
+export interface Project extends ProjectFrontmatter {
+  slug: string;
 }

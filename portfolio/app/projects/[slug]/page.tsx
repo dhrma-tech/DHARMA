@@ -1,0 +1,114 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { getAllProjects, getProject } from "@/lib/content";
+import { mdxComponents } from "@/components/mdx/MdxComponents";
+import TextLink from "@/components/ui/TextLink";
+import Monogram from "@/components/nav/Monogram";
+import ThemeToggle from "@/components/ThemeToggle";
+import Footer from "@/components/Footer";
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return getAllProjects().map((p) => ({ slug: p.slug }));
+}
+
+export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+  const entry = getProject(params.slug);
+  if (!entry) return {};
+  const { project } = entry;
+  return {
+    title: project.title,
+    description: project.description,
+    alternates: { canonical: `/projects/${project.slug}` },
+    openGraph: { title: project.title, description: project.description, url: `/projects/${project.slug}` },
+  };
+}
+
+export default function ProjectPage({ params }: { params: { slug: string } }) {
+  const entry = getProject(params.slug);
+  if (!entry) notFound();
+  const { project, body } = entry;
+
+  const all = getAllProjects();
+  const index = all.findIndex((p) => p.slug === project.slug);
+  const prev = index > 0 ? all[index - 1] : null;
+  const next = index < all.length - 1 ? all[index + 1] : null;
+
+  const links = [
+    project.live && { label: "Live site", href: project.live },
+    project.repo && { label: "Source on GitHub", href: project.repo },
+  ].filter((l): l is { label: string; href: string } => Boolean(l));
+
+  return (
+    <>
+      <header className="mx-auto flex h-14 max-w-[640px] items-center justify-between px-6">
+        <Monogram />
+        <ThemeToggle />
+      </header>
+
+      <main id="main" className="mx-auto max-w-[640px] px-6 pb-16 pt-10">
+        <Link href="/#projects" className="text-[15px] text-muted decoration-accent decoration-2 underline-offset-4 hover:text-fg hover:underline">
+          ← all projects
+        </Link>
+
+        <article className="mt-10">
+          <header>
+            <h1 className="font-display text-5xl font-extrabold leading-[0.95] tracking-[-0.04em] text-fg">
+              {project.title}
+            </h1>
+            <p className="mt-4 text-[17px] text-fg">{project.description}</p>
+            <p className="mt-4 font-mono text-[13px] text-muted">
+              {project.dates} · {project.status} · {project.stack.join(" · ")}
+            </p>
+          </header>
+
+          <MDXRemote source={body} components={mdxComponents} />
+
+          <section aria-labelledby="links-heading">
+            <h2 id="links-heading" className="mb-3 mt-12 font-mono text-[14px] text-muted">
+              links
+            </h2>
+            {links.length > 0 ? (
+              <ul className="flex flex-wrap gap-x-5 gap-y-1">
+                {links.map((l) => (
+                  <li key={l.href}>
+                    <TextLink href={l.href}>{l.label} →</TextLink>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-muted">{project.private ? "Private repository." : "No public links yet."}</p>
+            )}
+          </section>
+        </article>
+
+        <nav aria-label="More projects" className="mt-16 grid grid-cols-2 gap-4 border-t border-subtle pt-6">
+          <div>
+            {prev && (
+              <Link href={`/projects/${prev.slug}`} className="group block">
+                <span className="block font-mono text-[13px] text-muted">← previous</span>
+                <span className="text-[16px] font-medium text-fg decoration-accent decoration-2 underline-offset-4 group-hover:underline">
+                  {prev.title}
+                </span>
+              </Link>
+            )}
+          </div>
+          <div className="text-right">
+            {next && (
+              <Link href={`/projects/${next.slug}`} className="group block">
+                <span className="block font-mono text-[13px] text-muted">next →</span>
+                <span className="text-[16px] font-medium text-fg decoration-accent decoration-2 underline-offset-4 group-hover:underline">
+                  {next.title}
+                </span>
+              </Link>
+            )}
+          </div>
+        </nav>
+      </main>
+      <Footer />
+    </>
+  );
+}
