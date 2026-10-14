@@ -34,6 +34,10 @@
     line-height: 1.7;
   }
 
+  section[id] {
+    scroll-margin-top: 56px;
+  }
+
   :focus-visible {
     outline: 2px solid rgb(var(--accent));
     outline-offset: 2px;
@@ -49,11 +53,6 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
-  }
-
-  /* Legacy — removed with the old Navbar in Phase 2. */
-  .glass-dock {
-    @apply bg-surface border border-subtle;
   }
 }
 

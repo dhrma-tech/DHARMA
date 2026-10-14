@@ -8,6 +8,9 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [{ source: '/resume', destination: '/Profile.pdf', permanent: false }];
+  },
 };
 
 export default nextConfig;

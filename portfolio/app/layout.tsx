@@ -93,6 +93,12 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${interTight.variable} ${geistMono.variable} font-sans selection:bg-fg/10`}>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:bg-bg focus:px-3 focus:py-2 focus:text-fg"
+        >
+          Skip to content
+        </a>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

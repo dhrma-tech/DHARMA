@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-24 overflow-hidden max-w-[100vw]">
+    <section id="stack" className="py-24 overflow-hidden max-w-[100vw]">
       <div className="max-w-4xl mx-auto px-6 mb-12 flex flex-col md:flex-row gap-8 md:gap-12">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
