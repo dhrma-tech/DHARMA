@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { profile } from "../data/profile";
+import { experience } from "@/data/experience";
+
+const jobs = experience.flatMap((e) => e.roles.map((r) => ({ company: e.org, role: r.title, dates: r.dates, description: r.description })));
 
 export default function WorkExperience() {
   return (
@@ -16,13 +18,13 @@ export default function WorkExperience() {
           <h3 className="text-[10px] uppercase tracking-[0.18em] text-muted font-bold mb-4">
             WORK EXPERIENCE
           </h3>
-          <h2 className="text-4xl md:text-[44px] font-bold tracking-tight text-foreground">
+          <h2 className="text-4xl md:text-[44px] font-display font-extrabold tracking-tight text-foreground">
             Career Journey
           </h2>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {profile.work.map((job, index) => (
+          {jobs.map((job, index) => (
             <div key={index} className={index === 0 ? "md:col-span-2" : "col-span-1"}>
               <WorkCard job={job} />
             </div>
@@ -33,14 +35,14 @@ export default function WorkExperience() {
   );
 }
 
-function WorkCard({ job }: { job: typeof profile.work[0] }) {
+function WorkCard({ job }: { job: (typeof jobs)[number] }) {
   return (
     <div 
-      className="group relative p-8 rounded-[20px] bg-surface hover:shadow-sm border border-transparent hover:border-border transition-all flex flex-col h-full min-h-[220px]"
+      className="group relative p-8 rounded-[20px] bg-surface border border-transparent hover:border-border transition-all flex flex-col h-full min-h-[220px]"
     >
       <div className="flex items-center gap-4 mb-6">
-        <div className="w-10 h-10 rounded-full bg-foreground flex items-center justify-center shrink-0 font-bold text-lg text-background shadow-sm">
-          {job.letter}
+        <div className="w-10 h-10 rounded-full bg-foreground flex items-center justify-center shrink-0 font-bold text-lg text-background">
+          {job.company.charAt(0)}
         </div>
         <div>
           <h4 className="font-bold text-foreground text-lg">{job.company}</h4>

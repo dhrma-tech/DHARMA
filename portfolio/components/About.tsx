@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { profile } from "../data/profile";
+import { site } from "@/data/site";
 
 export default function About() {
   return (
@@ -21,21 +21,21 @@ export default function About() {
         
         <div className="w-full space-y-12 relative">
           <p className="text-2xl md:text-[28px] text-foreground leading-[1.4] font-medium tracking-tight">
-            {profile.bio}
+            {site.bio}
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
             <div className="space-y-1">
-              <div className="text-4xl font-bold text-foreground">{profile.yearsExperience} <span className="text-3xl">+</span></div>
+              <div className="text-4xl font-bold text-foreground">{site.yearsExperience} <span className="text-3xl">+</span></div>
               <div className="text-xs font-semibold text-muted tracking-wide">Years Experience</div>
             </div>
             <div className="space-y-1">
               <div className="text-[11px] font-semibold text-muted tracking-wide mb-1">Location</div>
-              <div className="text-sm font-bold text-foreground">{profile.location}</div>
+              <div className="text-sm font-bold text-foreground">{site.location}</div>
             </div>
             <div className="space-y-1">
               <div className="text-[11px] font-semibold text-muted tracking-wide mb-1">Focus</div>
-              <div className="text-sm font-bold text-foreground">{profile.focus}</div>
+              <div className="text-sm font-bold text-foreground">{site.focus}</div>
             </div>
           </div>
         </div>

@@ -3,31 +3,46 @@
 @tailwind utilities;
 
 @layer base {
+  /* Design tokens as RGB channels so Tailwind's /<alpha> modifiers work. */
   :root {
-    --background: 245 241 232;
-    --surface: 239 234 223;
-    --foreground: 45 36 30;
-    --primary: 45 36 30;
-    --border: 210 206 197;
-    --muted: 110 102 90;
-    --accent: 138 60 44;
+    --bg: 250 250 249;      /* #FAFAF9 */
+    --fg: 10 10 10;         /* #0A0A0A */
+    --muted: 115 115 115;   /* #737373 — 4.6:1 on --bg (AA) */
+    --subtle: 231 229 228;  /* #E7E5E4 */
+    --surface: 255 255 255; /* #FFFFFF */
+    --accent: 255 79 0;     /* #FF4F00 */
+    color-scheme: light;
   }
 
   .dark {
-    --background: 18 18 18;
-    --surface: 30 30 30;
-    --foreground: 245 241 232;
-    --primary: 245 241 232;
-    --border: 51 51 51;
-    --muted: 161 161 170;
-    --accent: 217 119 87;
+    --bg: 10 10 10;         /* #0A0A0A */
+    --fg: 237 237 237;      /* #EDEDED */
+    --muted: 139 139 139;   /* #8B8B8B — 5.8:1 on --bg (AA) */
+    --subtle: 38 38 38;     /* #262626 */
+    --surface: 20 20 20;    /* #141414 */
+    --accent: 255 106 61;   /* #FF6A3D */
+    color-scheme: dark;
   }
 
   html {
     scroll-behavior: smooth;
   }
+
   body {
-    @apply antialiased;
+    @apply bg-bg text-fg antialiased;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 
@@ -35,9 +50,10 @@
   .text-balance {
     text-wrap: balance;
   }
-  
+
+  /* Legacy — removed with the old Navbar in Phase 2. */
   .glass-dock {
-    @apply bg-surface/80 backdrop-blur-md border border-border/50 shadow-sm;
+    @apply bg-surface border border-subtle;
   }
 }
 

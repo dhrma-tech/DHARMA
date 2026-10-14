@@ -1,24 +1,44 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, Inter_Tight } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
-import { profile } from "@/data/profile";
-import { SITE_URL } from "@/lib/site";
+import ThemeProvider from "@/components/ThemeProvider";
+import { site } from "@/data/site";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
-const title = `${profile.name} | ${profile.role}`;
-const description = `${profile.tagline}. ${profile.role} and Mechatronics Engineering student building AI-native products with Claude Code — portfolio, projects, and work experience.`;
+const interTight = Inter_Tight({
+  subsets: ["latin"],
+  weight: ["800"],
+  display: "swap",
+  variable: "--font-display",
+});
+
+// Geist Mono isn't in next/font/google on Next 14, so it's self-hosted (SIL OFL, see app/fonts).
+const geistMono = localFont({
+  src: "./fonts/GeistMono-Regular.woff2",
+  weight: "400",
+  display: "swap",
+  variable: "--font-mono",
+});
+
+const title = `${site.name} | ${site.role}`;
+const description = `${site.tagline}. ${site.role} and Mechatronics Engineering student building AI-native products with Claude Code — portfolio, projects, and work experience.`;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(site.siteUrl),
   title: {
     default: title,
-    template: `%s | ${profile.name}`,
+    template: `%s | ${site.name}`,
   },
   description,
   keywords: [
-    profile.name,
+    site.name,
     "AI Product Engineer",
     "Mechatronics Engineering",
     "Claude Code",
@@ -26,15 +46,15 @@ export const metadata: Metadata = {
     "Full Stack Developer",
     "Portfolio",
   ],
-  authors: [{ name: profile.name, url: SITE_URL }],
-  creator: profile.name,
+  authors: [{ name: site.name, url: site.siteUrl }],
+  creator: site.name,
   openGraph: {
     type: "website",
-    url: SITE_URL,
+    url: "/",
     title,
     description,
-    siteName: profile.name,
-    images: [{ url: "/profile.jpeg", width: 800, height: 800, alt: profile.name }],
+    siteName: site.name,
+    images: [{ url: "/profile.jpeg", width: 800, height: 800, alt: site.name }],
   },
   twitter: {
     card: "summary_large_image",
@@ -51,12 +71,12 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: profile.name,
-  url: SITE_URL,
-  image: `${SITE_URL}/profile.jpeg`,
-  jobTitle: profile.role,
-  description: profile.tagline,
-  sameAs: [profile.github, profile.linkedin, profile.twitter],
+  name: site.name,
+  url: site.siteUrl,
+  image: `${site.siteUrl}/profile.jpeg`,
+  jobTitle: site.role,
+  description: site.tagline,
+  sameAs: [site.socials.github, site.socials.linkedin, site.socials.x],
 };
 
 export default function RootLayout({
@@ -68,25 +88,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.documentElement.classList.add('dark')
-                } else {
-                  document.documentElement.classList.remove('dark')
-                }
-              } catch (_) {}
-            `,
-          }}
-        />
-        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans bg-background text-foreground selection:bg-foreground/10`}>
-        {children}
+      <body className={`${inter.variable} ${interTight.variable} ${geistMono.variable} font-sans selection:bg-fg/10`}>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

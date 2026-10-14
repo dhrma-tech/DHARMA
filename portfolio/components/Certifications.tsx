@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { profile } from "../data/profile";
-import type { Certification } from "../data/profile";
+import { certifications } from "@/data/certifications";
+import type { Certification } from "@/types/content";
 
 export default function Certifications() {
-  if (!profile.certifications || profile.certifications.length === 0) return null;
+  if (!certifications || certifications.length === 0) return null;
 
   return (
     <section id="certifications" className="py-24 px-6 max-w-4xl mx-auto border-t border-border/60">
@@ -20,15 +20,15 @@ export default function Certifications() {
           <h3 className="text-[10px] uppercase tracking-[0.18em] text-muted font-bold mb-4">
             PROFESSIONAL DEVELOPMENT
           </h3>
-          <h2 className="text-4xl md:text-[44px] font-bold tracking-tight text-foreground">
+          <h2 className="text-4xl md:text-[44px] font-display font-extrabold tracking-tight text-foreground">
             Certifications
           </h2>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {profile.certifications.map((cert: Certification, index: number) => (
-            <div key={index} className="flex flex-col p-8 rounded-[20px] bg-surface hover:shadow-sm border border-transparent hover:border-border transition-all h-full min-h-[200px]">
-              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm mb-6 overflow-hidden border border-border/50">
+          {certifications.map((cert: Certification, index: number) => (
+            <div key={index} className="flex flex-col p-8 rounded-[20px] bg-surface border border-transparent hover:border-border transition-all h-full min-h-[200px]">
+              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shrink-0 mb-6 overflow-hidden border border-border/50">
                 {cert.logo ? (
                   <Image src={cert.logo} alt={cert.issuer} width={48} height={48} className="object-contain w-full h-full p-1.5" />
                 ) : (

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { profile } from "../data/profile";
+import { site } from "@/data/site";
 
 export default function Footer() {
   return (
@@ -15,7 +15,7 @@ export default function Footer() {
       </nav>
       
       <div className="text-xs font-semibold font-mono text-muted">
-        &copy; {new Date().getFullYear()} {profile.name}.
+        &copy; {new Date().getFullYear()} {site.name}.
       </div>
     </footer>
   );

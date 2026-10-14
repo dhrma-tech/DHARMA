@@ -10,17 +10,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "rgb(var(--background) / <alpha-value>)",
-        foreground: "rgb(var(--foreground) / <alpha-value>)",
-        surface: "rgb(var(--surface) / <alpha-value>)",
-        border: "rgb(var(--border) / <alpha-value>)",
-        primary: "rgb(var(--primary) / <alpha-value>)",
+        bg: "rgb(var(--bg) / <alpha-value>)",
+        fg: "rgb(var(--fg) / <alpha-value>)",
         muted: "rgb(var(--muted) / <alpha-value>)",
+        subtle: "rgb(var(--subtle) / <alpha-value>)",
+        surface: "rgb(var(--surface) / <alpha-value>)",
         accent: "rgb(var(--accent) / <alpha-value>)",
+        // Legacy aliases for components not yet redesigned; removed by Phase 4.
+        background: "rgb(var(--bg) / <alpha-value>)",
+        foreground: "rgb(var(--fg) / <alpha-value>)",
+        primary: "rgb(var(--fg) / <alpha-value>)",
+        border: "rgb(var(--subtle) / <alpha-value>)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "sans-serif"],
-        mono: ["var(--font-mono)", "monospace"],
+        sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "var(--font-inter)", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       animation: {
         scroll: "scroll 40s linear infinite",

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { profile } from "../data/profile";
+import { site } from "@/data/site";
 import Link from "next/link";
 import { Mail } from "lucide-react";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
@@ -24,7 +24,7 @@ export default function Contact() {
         
         <div className="w-full md:w-3/4 flex flex-col gap-10">
           <div>
-            <h2 className="text-4xl font-bold tracking-tight text-foreground mb-4">Get in touch.</h2>
+            <h2 className="text-4xl font-display font-extrabold tracking-tight text-foreground mb-4">Get in touch.</h2>
             <p className="text-foreground/80 text-lg leading-relaxed max-w-xl font-medium">
               Always open to discussing new projects, creative ideas or opportunities to be part of your visions.
             </p>
@@ -32,16 +32,16 @@ export default function Contact() {
 
           <div className="flex flex-col gap-5 w-fit">
             <Link 
-              href={`mailto:${profile.email}`} 
+              href={`mailto:${site.email}`} 
               className="flex items-center gap-4 text-foreground/80 hover:text-foreground font-semibold transition-colors group"
             >
               <div className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center group-hover:scale-105 transition-transform">
                 <Mail className="w-4 h-4" />
               </div>
-              <span>{profile.email}</span>
+              <span>{site.email}</span>
             </Link>
             <Link 
-              href={profile.github} target="_blank"
+              href={site.socials.github} target="_blank"
               className="flex items-center gap-4 text-foreground/80 hover:text-foreground font-semibold transition-colors group"
             >
               <div className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center group-hover:scale-105 transition-transform">
@@ -50,7 +50,7 @@ export default function Contact() {
               <span>GitHub</span>
             </Link>
             <Link 
-              href={profile.linkedin} target="_blank"
+              href={site.socials.linkedin} target="_blank"
               className="flex items-center gap-4 text-foreground/80 hover:text-foreground font-semibold transition-colors group"
             >
                <div className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center group-hover:scale-105 transition-transform">
@@ -59,7 +59,7 @@ export default function Contact() {
               <span>LinkedIn</span>
             </Link>
             <Link 
-              href={profile.twitter} target="_blank"
+              href={site.socials.x} target="_blank"
               className="flex items-center gap-4 text-foreground/80 hover:text-foreground font-semibold transition-colors group"
             >
                <div className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center group-hover:scale-105 transition-transform">
