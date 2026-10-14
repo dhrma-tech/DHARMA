@@ -5,9 +5,10 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllProjects, getProject } from "@/lib/content";
 import { mdxComponents } from "@/components/mdx/MdxComponents";
 import TextLink from "@/components/ui/TextLink";
-import Monogram from "@/components/nav/Monogram";
-import ThemeToggle from "@/components/ThemeToggle";
+import PageHeader from "@/components/nav/PageHeader";
 import Footer from "@/components/Footer";
+import { site } from "@/data/site";
+import { OG_SIZE, ogImageUrl } from "@/lib/og";
 
 export const dynamicParams = false;
 
@@ -19,11 +20,28 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const entry = getProject(params.slug);
   if (!entry) return {};
   const { project } = entry;
+  const image = {
+    url: ogImageUrl({
+      title: project.title,
+      subtitle: project.summary,
+      eyebrow: `${project.year} · ${project.stack.slice(0, 3).join(" · ")}`,
+    }),
+    ...OG_SIZE,
+    alt: `${project.title} — ${project.summary}`,
+  };
   return {
     title: project.title,
     description: project.description,
     alternates: { canonical: `/projects/${project.slug}` },
-    openGraph: { title: project.title, description: project.description, url: `/projects/${project.slug}` },
+    openGraph: {
+      type: "article",
+      siteName: site.name,
+      title: project.title,
+      description: project.description,
+      url: `/projects/${project.slug}`,
+      images: [image],
+    },
+    twitter: { card: "summary_large_image", title: project.title, description: project.description, images: [image] },
   };
 }
 
@@ -44,10 +62,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <header className="mx-auto flex h-14 max-w-[640px] items-center justify-between px-6">
-        <Monogram />
-        <ThemeToggle />
-      </header>
+      <PageHeader />
 
       <main id="main" className="mx-auto max-w-[640px] px-6 pb-16 pt-10">
         <Link href="/#projects" className="text-[15px] text-muted decoration-accent decoration-2 underline-offset-4 hover:text-fg hover:underline">

@@ -54,29 +54,17 @@ export const metadata: Metadata = {
     title,
     description,
     siteName: site.name,
-    images: [{ url: "/profile.jpeg", width: 800, height: 800, alt: site.name }],
+    // Images come from the opengraph-image / twitter-image file conventions.
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
-    images: ["/profile.jpeg"],
   },
   robots: {
     index: true,
     follow: true,
   },
-};
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: site.name,
-  url: site.siteUrl,
-  image: `${site.siteUrl}/profile.jpeg`,
-  jobTitle: site.role,
-  description: site.tagline,
-  sameAs: [site.socials.github, site.socials.linkedin, site.socials.x],
 };
 
 export default function RootLayout({
@@ -86,12 +74,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      </head>
       <body className={`${inter.variable} ${interTight.variable} ${geistMono.variable} font-sans selection:bg-fg/10`}>
         <a
           href="#main"

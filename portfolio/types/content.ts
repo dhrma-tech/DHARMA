@@ -83,3 +83,15 @@ export interface ProjectFrontmatter {
 export interface Project extends ProjectFrontmatter {
   slug: string;
 }
+
+/** Frontmatter of content/writing/*.mdx */
+export interface PostFrontmatter {
+  title: string;
+  /** ISO date, e.g. "2026-10-14" */
+  date: string;
+  summary: string;
+}
+
+export interface Post extends PostFrontmatter {
+  slug: string;
+}
