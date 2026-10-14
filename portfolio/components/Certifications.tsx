@@ -1,60 +1,34 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { certifications } from "@/data/certifications";
-import type { Certification } from "@/types/content";
+import Section from "@/components/ui/Section";
+import TextLink from "@/components/ui/TextLink";
 
 export default function Certifications() {
-  if (!certifications || certifications.length === 0) return null;
+  if (certifications.length === 0) return null;
 
   return (
-    <section id="certifications" className="py-24 px-6 max-w-4xl mx-auto border-t border-border/60">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
-      >
-        <div className="mb-10">
-          <h3 className="text-[10px] uppercase tracking-[0.18em] text-muted font-bold mb-4">
-            PROFESSIONAL DEVELOPMENT
-          </h3>
-          <h2 className="text-4xl md:text-[44px] font-display font-extrabold tracking-tight text-foreground">
-            Certifications
-          </h2>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {certifications.map((cert: Certification, index: number) => (
-            <div key={index} className="flex flex-col p-8 rounded-[20px] bg-surface border border-transparent hover:border-border transition-all h-full min-h-[200px]">
-              <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shrink-0 mb-6 overflow-hidden border border-border/50">
-                {cert.logo ? (
-                  <Image src={cert.logo} alt={cert.issuer} width={48} height={48} className="object-contain w-full h-full p-1.5" />
-                ) : (
-                  <div className="w-full h-full rounded-full bg-[#0a66c2] flex items-center justify-center text-white">
-                    <span className="font-bold text-xl">{cert.name ? cert.name.charAt(0) : "C"}</span>
-                  </div>
+    <Section id="certifications" label="certifications">
+      <ul className="divide-y divide-subtle border-y border-subtle">
+        {certifications.map((cert) => (
+          <li key={cert.url} className="flex items-baseline justify-between gap-4 py-3">
+            <div className="min-w-0">
+              <p className="flex items-center gap-2 text-[16px] font-medium leading-snug text-fg">
+                {cert.logo && (
+                  <Image src={cert.logo} alt="" width={16} height={16} className="h-4 w-4 shrink-0 object-contain" />
                 )}
-              </div>
-              
-              <h4 className="font-medium text-foreground text-xl leading-snug mb-3 pr-4">{cert.name}</h4>
-              
-              <div className="text-[15px] text-foreground/70 mb-2">{cert.issuer}</div>
-              
-              <div className="text-[13px] text-foreground/60 mb-6">{cert.date}</div>
-              
-              <div className="flex-grow"></div>
-              
-              {cert.url && (
-                <a href={cert.url} target="_blank" rel="noreferrer" className="text-[13px] font-medium text-accent hover:opacity-80 transition-opacity inline-block">
-                  View Certificate &rarr;
-                </a>
-              )}
+                {cert.name}
+              </p>
+              <p className="text-[15px] text-muted">{cert.issuer}</p>
             </div>
-          ))}
-        </div>
-      </motion.div>
-    </section>
+            <div className="flex shrink-0 flex-col items-end gap-1 font-mono text-[13px] text-muted sm:flex-row sm:items-baseline sm:gap-4">
+              <span>{cert.date}</span>
+              <TextLink href={cert.url} className="font-sans text-[14px]">
+                Verify →<span className="sr-only"> {cert.name} certificate (opens in new tab)</span>
+              </TextLink>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Section>
   );
 }

@@ -1,22 +1,16 @@
-import Link from "next/link";
 import { site } from "@/data/site";
+
+// Evaluated at build time — the home page is statically generated.
+const BUILD_DATE = new Date().toISOString().slice(0, 10);
+const YEAR = BUILD_DATE.slice(0, 4);
 
 export default function Footer() {
   return (
-    <footer className="py-12 px-6 border-t border-border/60 max-w-4xl mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-6">
-      <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-muted" aria-label="Footer">
-        <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-        <Link href="#about" className="hover:text-foreground transition-colors">About</Link>
-        <Link href="#work" className="hover:text-foreground transition-colors">Work</Link>
-        <Link href="#projects" className="hover:text-foreground transition-colors">Projects</Link>
-        <Link href="#stack" className="hover:text-foreground transition-colors">Skills</Link>
-        <Link href="#certifications" className="hover:text-foreground transition-colors">Certifications</Link>
-        <Link href="#contact" className="hover:text-foreground transition-colors">Contact</Link>
-      </nav>
-      
-      <div className="text-xs font-semibold font-mono text-muted">
-        &copy; {new Date().getFullYear()} {site.name}.
-      </div>
+    <footer className="mx-auto max-w-[640px] border-t border-subtle px-6 py-10 font-mono text-[13px] text-muted">
+      <p>
+        © {YEAR} {site.name} · Built with Claude Code · Last updated{" "}
+        <time dateTime={BUILD_DATE}>{BUILD_DATE}</time>
+      </p>
     </footer>
   );
 }

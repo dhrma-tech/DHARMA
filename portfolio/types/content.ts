@@ -10,7 +10,10 @@ export interface Site {
   role: string;
   tagline: string;
   positioning: string;
+  /** Full original bio (used for meta / AI context). */
   bio: string;
+  /** Tightened 3–4 line version shown in the About section. */
+  about: string;
   availability: string;
   email: string;
   socials: Socials;

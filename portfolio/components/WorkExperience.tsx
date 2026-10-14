@@ -1,60 +1,36 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { experience } from "@/data/experience";
+import Section from "@/components/ui/Section";
 
-const jobs = experience.flatMap((e) => e.roles.map((r) => ({ company: e.org, role: r.title, dates: r.dates, description: r.description })));
-
+/**
+ * Rows grouped by org. Each role is a native <details> accordion, so it's
+ * keyboard-operable (Enter/Space on the summary) without client JS.
+ */
 export default function WorkExperience() {
   return (
-    <section id="work" className="py-24 px-6 max-w-5xl mx-auto">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
-      >
-        <div className="mb-10">
-          <h3 className="text-[10px] uppercase tracking-[0.18em] text-muted font-bold mb-4">
-            WORK EXPERIENCE
-          </h3>
-          <h2 className="text-4xl md:text-[44px] font-display font-extrabold tracking-tight text-foreground">
-            Career Journey
-          </h2>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {jobs.map((job, index) => (
-            <div key={index} className={index === 0 ? "md:col-span-2" : "col-span-1"}>
-              <WorkCard job={job} />
-            </div>
-          ))}
-        </div>
-      </motion.div>
-    </section>
-  );
-}
-
-function WorkCard({ job }: { job: (typeof jobs)[number] }) {
-  return (
-    <div 
-      className="group relative p-8 rounded-[20px] bg-surface border border-transparent hover:border-border transition-all flex flex-col h-full min-h-[220px]"
-    >
-      <div className="flex items-center gap-4 mb-6">
-        <div className="w-10 h-10 rounded-full bg-foreground flex items-center justify-center shrink-0 font-bold text-lg text-background">
-          {job.company.charAt(0)}
-        </div>
-        <div>
-          <h4 className="font-bold text-foreground text-lg">{job.company}</h4>
-          <div className="text-xs font-medium text-muted mt-0.5">{job.role}</div>
-        </div>
-      </div>
-      
-      <div className="text-[13px] font-semibold text-muted mb-4">{job.dates}</div>
-      
-      <p className="text-sm text-foreground/80 leading-relaxed flex-grow">
-        {job.description}
-      </p>
-    </div>
+    <Section id="work" label="work">
+      <ul className="divide-y divide-subtle border-y border-subtle">
+        {experience.map((entry) => (
+          <li key={entry.org} className="py-2">
+            {entry.roles.map((role, i) => (
+              <details key={role.title} className="group">
+                <summary className="-mx-3 flex cursor-pointer list-none items-baseline justify-between gap-4 rounded px-3 py-2 transition-colors hover:bg-surface [&::-webkit-details-marker]:hidden">
+                  <span className="min-w-0">
+                    <span className="block text-[16px] font-medium leading-snug text-fg">{role.title}</span>
+                    {i === 0 && <span className="block text-[15px] leading-snug text-muted">{entry.org}</span>}
+                  </span>
+                  <span className="shrink-0 font-mono text-[13px] text-muted">
+                    {role.dates}
+                    <span aria-hidden="true" className="ml-2 inline-block transition-transform group-open:rotate-45">
+                      +
+                    </span>
+                  </span>
+                </summary>
+                <p className="pb-3 pr-8 pt-1 text-[15px] text-muted">{role.description}</p>
+              </details>
+            ))}
+          </li>
+        ))}
+      </ul>
+    </Section>
   );
 }

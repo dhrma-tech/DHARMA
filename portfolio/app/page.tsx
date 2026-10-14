@@ -3,7 +3,8 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import WorkExperience from "@/components/WorkExperience";
 import Projects from "@/components/Projects";
-import Skills from "@/components/Skills";
+import Now from "@/components/Now";
+import Stack from "@/components/Stack";
 import Certifications from "@/components/Certifications";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -19,9 +20,11 @@ export default function Home() {
       <main id="main" className="min-h-screen">
         <Hero />
         <About />
-        <WorkExperience />
+        <Now />
         <Projects />
-        <Skills />
+        <WorkExperience />
+        {/* Writing — phase 5 */}
+        <Stack />
         <Certifications />
         <Contact />
       </main>

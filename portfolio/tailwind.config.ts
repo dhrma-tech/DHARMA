@@ -28,8 +28,6 @@ const config: Config = {
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       animation: {
-        scroll: "scroll 40s linear infinite",
-        "fade-up": "fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards",
         eq: "eq 1.1s ease-in-out infinite alternate",
         rise: "rise 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both",
         pop: "pop 500ms cubic-bezier(0.2, 0.8, 0.2, 1) both",
@@ -46,14 +44,6 @@ const config: Config = {
         eq: {
           "0%": { transform: "scaleY(0.25)" },
           "100%": { transform: "scaleY(1)" },
-        },
-        scroll: {
-          "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(calc(-50% - 1rem))" },
-        },
-        fadeUp: {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
         },
       },
     },
