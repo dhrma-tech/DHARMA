@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { Project, ProjectCategory } from "@/types/content";
-import { cn } from "@/lib/cn";
+// clsx (not cn/tailwind-merge) in client components keeps twMerge out of the bundle.
+import { clsx as cn } from "clsx";
 
 type Filter = "All" | ProjectCategory;
 

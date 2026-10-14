@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { NavItem } from "@/lib/nav";
-import { cn } from "@/lib/cn";
+// clsx (not cn/tailwind-merge) in client components keeps twMerge out of the bundle.
+import { clsx as cn } from "clsx";
 
 export default function NavLinks({
   items,
@@ -12,7 +13,7 @@ export default function NavLinks({
   className?: string;
 }) {
   return (
-    <ul className={cn("flex items-center gap-7", className)}>
+    <ul className={cn("flex items-center", className)}>
       {items.map((item) => {
         const isActive = item.section !== undefined && item.section === active;
         return (

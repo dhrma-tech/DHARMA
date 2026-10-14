@@ -24,6 +24,8 @@ const geistMono = localFont({
   src: "./fonts/GeistMono-Regular.woff2",
   weight: "400",
   display: "swap",
+  // Mono is only used below the fold; keep it off the critical path.
+  preload: false,
   variable: "--font-mono",
 });
 

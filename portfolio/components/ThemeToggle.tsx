@@ -2,7 +2,8 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/cn";
+// clsx (not cn/tailwind-merge) in client components keeps twMerge out of the bundle.
+import { clsx as cn } from "clsx";
 
 export default function ThemeToggle({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
