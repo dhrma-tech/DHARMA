@@ -12,7 +12,11 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { getNavItems } from "@/lib/nav";
 import { getAllPosts } from "@/lib/content";
+import { getNowData } from "@/lib/now";
 import { site } from "@/data/site";
+
+// Now section + hero status come from Supabase; /api/revalidate refreshes sooner.
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -32,8 +36,9 @@ const personJsonLd = {
   sameAs: [site.socials.github, site.socials.linkedin, site.socials.x],
 };
 
-export default function Home() {
+export default async function Home() {
   const posts = getAllPosts();
+  const now = await getNowData();
   const navItems = getNavItems({ hasWriting: posts.length > 0 });
 
   return (
@@ -41,9 +46,9 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
       <SiteHeader items={navItems} />
       <main id="main" className="min-h-screen">
-        <Hero />
+        <Hero now={now} />
         <About />
-        <Now />
+        <Now now={now} />
         <Projects />
         <WorkExperience />
         <Writing posts={posts} />

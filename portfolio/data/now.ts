@@ -1,6 +1,6 @@
 import type { Now } from "@/types/content";
 
-// Update weekly.
+// Fallback for the Now section when Supabase is unreachable; live copy lives in now_items/site_settings.
 // TODO: rewrite these bullets in your own words — they're seeded from project descriptions.
 export const now: Now = {
   building: "STEVE",

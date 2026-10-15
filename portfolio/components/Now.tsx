@@ -1,9 +1,9 @@
-import { now } from "@/data/now";
+import type { NowData } from "@/lib/now";
 import Section from "@/components/ui/Section";
 import { getGitHubActivity } from "@/lib/github";
 import { relativeTime } from "@/lib/time";
 
-export default async function Now() {
+export default async function Now({ now }: { now: NowData }) {
   const activity = await getGitHubActivity();
   const commits = activity?.commits ?? [];
 
