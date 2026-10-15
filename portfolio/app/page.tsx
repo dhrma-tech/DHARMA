@@ -2,17 +2,23 @@ import type { Metadata } from "next";
 import SiteHeader from "@/components/nav/SiteHeader";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import Ask from "@/components/Ask";
 import WorkExperience from "@/components/WorkExperience";
 import Projects from "@/components/Projects";
 import Now from "@/components/Now";
 import Writing from "@/components/Writing";
 import Stack from "@/components/Stack";
 import Certifications from "@/components/Certifications";
+import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { getNavItems } from "@/lib/nav";
 import { getAllPosts } from "@/lib/content";
+import { getNowData } from "@/lib/now";
 import { site } from "@/data/site";
+
+// Now section + hero status come from Supabase; /api/revalidate refreshes sooner.
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -32,8 +38,9 @@ const personJsonLd = {
   sameAs: [site.socials.github, site.socials.linkedin, site.socials.x],
 };
 
-export default function Home() {
+export default async function Home() {
   const posts = getAllPosts();
+  const now = await getNowData();
   const navItems = getNavItems({ hasWriting: posts.length > 0 });
 
   return (
@@ -41,11 +48,13 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
       <SiteHeader items={navItems} />
       <main id="main" className="min-h-screen">
-        <Hero />
+        <Hero now={now} />
         <About />
-        <Now />
+        <Ask />
+        <Now now={now} />
         <Projects />
         <WorkExperience />
+        <Education />
         <Writing posts={posts} />
         <Stack />
         <Certifications />

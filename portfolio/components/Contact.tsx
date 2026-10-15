@@ -1,6 +1,7 @@
 import { site } from "@/data/site";
 import Section from "@/components/ui/Section";
 import TextLink from "@/components/ui/TextLink";
+import ContactForm from "@/components/contact/ContactForm";
 
 const SOCIALS = [
   { label: "GitHub", href: site.socials.github },
@@ -22,7 +23,7 @@ export default function Contact() {
         {site.email}
       </a>
 
-      {/* Contact form lands here in backend phase B-2. */}
+      <ContactForm />
 
       <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-1">
         {SOCIALS.map((link) => (

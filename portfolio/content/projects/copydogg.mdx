@@ -1,0 +1,41 @@
+---
+title: CopyDogg
+summary: AI writing in your own voice
+description: An open-source writing tool that learns how you write, then turns a few-word idea into posts, replies and emails that already sound like you.
+year: 2026
+dates: Sep 2026 – Oct 2026
+status: Shipped
+stack: [Next.js 16, TypeScript, Tailwind CSS v4, Claude API, Gemini API]
+category: AI
+featured: true
+order: 4
+repo: https://github.com/dhrma-tech/CopyDogg
+live: https://copy-dogg.vercel.app
+---
+
+## Problem
+
+AI writes posts. Most of them sound like AI. Getting a model to write like you means re-explaining your tone, platforms and rules every single time.
+
+## What I built
+
+An open-source writing tool that learns your voice once — the platforms you post on, a few old posts, and one boring post rewritten your way — then turns an idea into 2–3 drafts that already sound like you.
+
+- **Five modes:** Write, Reply, Rewrite, Notes (meeting notes into a recap) and Check (how a message will come across).
+- Formats for X, LinkedIn, Instagram, Threads, Reddit, newsletters, email, text messages and work chat, including threads and carousels.
+- **Voice profiles** with tone dials, hard rules and per-platform notes, and more than one voice ("Work me", "Friends me").
+- Quick tweaks: shorter, warmer, more direct, funnier, or remix for another platform.
+- A searchable library of saved posts, contacts, templates and snippets, plus daily backups and data export.
+- **Local-first:** everything lives in one JSON file on your machine, with no analytics or telemetry.
+- Installable as its own app window, with an optional browser side-panel extension.
+- Works with Claude or Gemini using your own API key.
+
+## Key decisions
+
+- **Demo mode first.** With no API key, every screen still works and saves; only the AI output is placeholder text. Anyone can try it in a few minutes.
+- **Bring your own key.** No account and no server-side model costs; you connect Claude or Gemini yourself.
+- **Written for non-developers.** Setup docs assume no technical background.
+
+## Results / what I learned
+
+Shipped as open source under the MIT license, with a live site. It runs locally in about two minutes: `npm install`, then `npm run dev`.

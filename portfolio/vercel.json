@@ -1,0 +1,3 @@
+{
+  "crons": [{ "path": "/api/cron/reindex", "schedule": "0 3 * * 1" }]
+}

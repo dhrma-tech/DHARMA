@@ -8,7 +8,7 @@ status: In progress
 stack: [TypeScript, pnpm monorepo, Gemini API, Vitest]
 category: AI
 featured: true
-order: 1
+order: 3
 repo: https://github.com/dhrma-tech/DSTACK
 ---
 
@@ -22,7 +22,9 @@ Going from a rough product idea to a shipped build with AI assistants tends to b
 
 A CLI-native, API-first workflow orchestration system that turns a rough product idea into a structured AI-assisted build pipeline: planning, architecture, implementation, refinement, and deployment.
 
-- Built as a pnpm TypeScript monorepo.
+- 42 slash-command skills across planning, design, review, QA, safety, memory and deploy (e.g. `/office-hours`, `/autoplan`, `/review`, `/qa`, `/ship`).
+- `/ship` is blocked until QA and review gates pass and no hard-gate artifact is stale.
+- Built as a pnpm TypeScript monorepo: `shared`, `core`, `cli`, plus `server` and `web` packages.
 - Gemini-backed, with an offline "fake provider" mode so it runs without an API key.
 - Tested with Vitest.
 
@@ -39,4 +41,4 @@ A CLI-native, API-first workflow orchestration system that turns a rough product
 
 ## Results / what I learned
 
-<Todo>Add results — usage, test coverage, a build you shipped with it — and one or two lessons.</Todo>
+In active development, about a month from a full release.

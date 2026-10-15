@@ -10,7 +10,7 @@ export default function Certifications() {
     <Section id="certifications" label="certifications">
       <ul className="divide-y divide-subtle border-y border-subtle">
         {certifications.map((cert) => (
-          <li key={cert.url} className="flex items-baseline justify-between gap-4 py-3">
+          <li key={cert.name} className="flex items-baseline justify-between gap-4 py-3">
             <div className="min-w-0">
               <p className="flex items-center gap-2 text-[16px] font-medium leading-snug text-fg">
                 {cert.logo && (
@@ -22,9 +22,11 @@ export default function Certifications() {
             </div>
             <div className="flex shrink-0 flex-col items-end gap-1 font-mono text-[13px] text-muted sm:flex-row sm:items-baseline sm:gap-4">
               <span>{cert.date}</span>
-              <TextLink href={cert.url} className="font-sans text-[14px]">
-                Verify →<span className="sr-only"> {cert.name} certificate (opens in new tab)</span>
-              </TextLink>
+              {cert.url && (
+                <TextLink href={cert.url} className="font-sans text-[14px]">
+                  Verify →<span className="sr-only"> {cert.name} certificate (opens in new tab)</span>
+                </TextLink>
+              )}
             </div>
           </li>
         ))}

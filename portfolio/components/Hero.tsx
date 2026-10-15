@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { site } from "@/data/site";
-import { now } from "@/data/now";
+import type { NowData } from "@/lib/now";
 import ThemeToggle from "@/components/ThemeToggle";
 import FitText from "@/components/hero/FitText";
 import Equalizer from "@/components/hero/Equalizer";
@@ -49,7 +49,7 @@ function Photo({ className }: { className: string }) {
   );
 }
 
-export default function Hero() {
+export default function Hero({ now }: { now: NowData }) {
   return (
     <section
       id="hero"
@@ -98,10 +98,12 @@ export default function Hero() {
 
         <div className="flex flex-col items-start gap-1 leading-tight sm:items-end">
           <ThemeToggle />
-          <p className="flex items-center gap-2 text-[13px] text-fg">
-            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent" />
-            {site.availability}
-          </p>
+          {now.availability && (
+            <p className="flex items-center gap-2 text-[13px] text-fg">
+              <span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent" />
+              {now.availability}
+            </p>
+          )}
         </div>
       </div>
     </section>

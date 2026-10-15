@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import ThemeProvider from "@/components/ThemeProvider";
+import TrackClicks from "@/components/analytics/TrackClicks";
 import { site } from "@/data/site";
 
 const inter = Inter({
@@ -84,6 +87,9 @@ export default function RootLayout({
           Skip to content
         </a>
         <ThemeProvider>{children}</ThemeProvider>
+        <TrackClicks />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

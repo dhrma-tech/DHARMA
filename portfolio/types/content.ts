@@ -53,8 +53,15 @@ export interface Certification {
   name: string;
   issuer: string;
   date: string;
-  url: string;
+  url?: string;
   logo?: string;
+}
+
+export interface Education {
+  school: string;
+  degree: string;
+  dates: string;
+  detail?: string;
 }
 
 export type ProjectCategory = "AI" | "Web";

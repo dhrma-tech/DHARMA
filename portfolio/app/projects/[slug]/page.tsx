@@ -6,6 +6,7 @@ import { getAllProjects, getProject } from "@/lib/content";
 import { mdxComponents } from "@/components/mdx/MdxComponents";
 import TextLink from "@/components/ui/TextLink";
 import PageHeader from "@/components/nav/PageHeader";
+import ViewCounter from "@/components/ViewCounter";
 import Footer from "@/components/Footer";
 import { site } from "@/data/site";
 import { OG_SIZE, ogImageUrl } from "@/lib/og";
@@ -77,6 +78,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
             <p className="mt-4 text-[17px] text-fg">{project.description}</p>
             <p className="mt-4 font-mono text-[13px] text-muted">
               {project.dates} · {project.status} · {project.stack.join(" · ")}
+              <ViewCounter slug={project.slug} />
             </p>
           </header>
 

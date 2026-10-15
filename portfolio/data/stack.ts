@@ -1,9 +1,9 @@
 import type { StackGroup } from "@/types/content";
 
 export const stack: StackGroup[] = [
-  { label: "Build", items: ["Claude Code", "Next.js", "React", "TypeScript", "Tailwind", "Framer Motion"] },
-  { label: "AI", items: ["Gemini API", "Google AI SDK", "Claude API", "RAG", "agents"] },
-  { label: "Data & Ship", items: ["Supabase", "PostgreSQL", "Vercel", "Git/GitHub"] },
+  { label: "Build", items: ["Claude Code", "Next.js", "React", "TypeScript", "Tailwind", "Framer Motion", "Electron"] },
+  { label: "AI", items: ["Claude API", "Gemini API", "Google AI SDK", "Ollama", "MCP", "RAG", "Agents"] },
+  { label: "Data & Ship", items: ["Supabase", "PostgreSQL", "Prisma", "SQLite", "Vitest", "Vercel", "Git/GitHub"] },
   { label: "Learning", items: ["Python"] },
 ];
 

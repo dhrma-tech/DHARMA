@@ -8,6 +8,7 @@ import PageHeader from "@/components/nav/PageHeader";
 import Footer from "@/components/Footer";
 import { site } from "@/data/site";
 import { OG_SIZE, ogImageUrl } from "@/lib/og";
+import ViewCounter from "@/components/ViewCounter";
 
 export const dynamicParams = false;
 
@@ -56,6 +57,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
             </h1>
             <p className="mt-4 font-mono text-[13px] text-muted">
               <time dateTime={post.date}>{post.date}</time>
+              <ViewCounter slug={post.slug} />
             </p>
           </header>
           <MDXRemote source={body} components={mdxComponents} />
