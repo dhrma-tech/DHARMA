@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { clsx as cn } from "clsx";
+import { track } from "@vercel/analytics";
 import { PREFILL_EVENT, type PrefillDetail } from "@/components/contact/prefill";
 
 type Status = { state: "idle" } | { state: "sending" } | { state: "sent" } | { state: "error"; message: string };
@@ -44,6 +45,7 @@ export default function ContactForm() {
       });
       if (res.ok) {
         form.reset();
+        track("contact_submit", { source: data.source ?? "contact-form" });
         setPrefill(null);
         setStatus({ state: "sent" });
         return;

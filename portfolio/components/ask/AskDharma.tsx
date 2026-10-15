@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, type FormEvent } from "react";
+import { track } from "@vercel/analytics";
 import { SOURCES_HEADER, STARTER_QUESTIONS, isRefusal } from "@/lib/ai/constants";
 import { PREFILL_EVENT, type PrefillDetail } from "@/components/contact/prefill";
 
@@ -39,6 +40,7 @@ export default function AskDharma() {
     abortRef.current = controller;
     setInput(q);
     setState({ status: "loading", question: q });
+    track("ask_question", { starter: STARTER_QUESTIONS.includes(q) });
 
     try {
       const res = await fetch("/api/ask", {
