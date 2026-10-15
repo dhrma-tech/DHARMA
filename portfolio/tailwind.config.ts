@@ -23,7 +23,8 @@ const config: Config = {
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       animation: {
-        eq: "eq 1.1s ease-in-out infinite alternate",
+        type: "type 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite both",
+        blink: "blink 1s steps(1, end) infinite",
         rise: "rise 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both",
         pop: "pop 500ms cubic-bezier(0.2, 0.8, 0.2, 1) both",
       },
