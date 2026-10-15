@@ -5,9 +5,9 @@ export default function Monogram() {
     <Link
       href="/"
       aria-label="Dharmaraj Aparadh — home"
-      className="inline-flex h-8 w-8 shrink-0 -rotate-12 items-center justify-center rounded-full border border-fg font-display text-[11px] font-extrabold tracking-tight text-fg transition-transform hover:rotate-0"
+      className="mr-6 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-fg font-display text-base font-extrabold leading-none text-fg transition-colors hover:bg-fg hover:text-bg"
     >
-      DA
+      D
     </Link>
   );
 }

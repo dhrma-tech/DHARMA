@@ -3,7 +3,7 @@ import { site } from "@/data/site";
 import type { NowData } from "@/lib/now";
 import ThemeToggle from "@/components/ThemeToggle";
 import FitText from "@/components/hero/FitText";
-import Equalizer from "@/components/hero/Equalizer";
+import CodeTyping from "@/components/hero/CodeTyping";
 import HeroScrollFade from "@/components/hero/HeroScrollFade";
 
 const [FIRST, LAST] = site.shortName.split(" ");
@@ -83,16 +83,16 @@ export default function Hero({ now }: { now: NowData }) {
       </HeroScrollFade>
 
       <div className="grid grid-cols-1 gap-6 px-6 pb-8 pt-10 sm:grid-cols-2 sm:items-end sm:gap-x-10 sm:px-10 lg:grid-cols-[1fr_2fr_1fr]">
-        {/* sm–lg: positioning gets its own row so it fits in 3 lines; lg+: three columns. */}
+        {/* sm–lg: positioning gets its own row; lg+: three columns. */}
         <div className="flex items-center gap-3">
-          <Equalizer />
+          <CodeTyping />
           <div className="leading-tight">
             <p className="text-[13px] text-muted">Now building</p>
             <p className="text-[15px] font-medium text-fg">{now.building}</p>
           </div>
         </div>
 
-        <p className="line-clamp-3 max-w-sm text-[15px] font-medium leading-snug text-fg sm:order-first sm:col-span-2 sm:max-w-md lg:order-none lg:col-span-1 lg:max-w-sm lg:justify-self-center">
+        <p className="max-w-sm text-[15px] font-medium leading-snug text-fg sm:order-first sm:col-span-2 sm:max-w-md lg:order-none lg:col-span-1 lg:max-w-sm lg:justify-self-center">
           {site.positioning}
         </p>
 
