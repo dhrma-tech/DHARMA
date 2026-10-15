@@ -1,0 +1,40 @@
+%%{init: {'theme':'base','fontFamily':'Inter','flowchart':{'wrappingWidth':320},'themeVariables':{'fontFamily':'Inter','fontSize':'16px','lineColor':'#64748B','primaryTextColor':'#0F172A','clusterBkg':'#FAFAF9','clusterBorder':'#CBD5E1','edgeLabelBackground':'#FFFFFF'}}}%%
+flowchart TB
+  subgraph SURF["Surfaces"]
+    direction LR
+    CLI["ds CLI<br/>yargs · printer"]
+    WEB["Web UI<br/>Next.js 16"]
+  end
+  WEB -- "REST + SSE" --> SRV["@dstack/server<br/>Express 5 · bearer auth · rate limits"]
+  SRV -- "spawns CLI · NDJSON events" --> CLI
+  CLI --> EXE
+  subgraph CORE["@dstack/core — all runtime logic"]
+    EXE["SkillExecutor · 42 skills"] --> PROMPT["PromptTemplateEngine<br/>prior artifacts + learnings"]
+    PROMPT --> ROUTER["ModelRouter · retries"]
+    EXE --> TOOLS["ToolExecutor<br/>file · shell · git · browser"]
+    TOOLS --> GATE{"PermissionGate<br/>guard · careful · freeze"}
+  end
+  subgraph PROV["Provider interface"]
+    direction LR
+    GEM["GeminiProvider<br/>flash · pro"]
+    FAKE["FakeProvider<br/>offline · deterministic"]
+  end
+  ROUTER --> GEM
+  ROUTER --> FAKE
+  EXE -- "write" --> STORE[(".dstack/artifacts<br/>latest.json + versions · Zod-validated")]
+  STORE -- "context for the next skill" --> PROMPT
+  SHARED["@dstack/shared<br/>types · Zod schemas · errors"] -.->|"one contract for every package"| CORE
+  classDef ui fill:#DBEAFE,stroke:#2563EB,stroke-width:2px,color:#0F172A
+  classDef srv fill:#EDE9FE,stroke:#7C3AED,stroke-width:2px,color:#0F172A
+  classDef core fill:#FFEDD5,stroke:#FF4F00,stroke-width:2px,color:#0F172A
+  classDef model fill:#DCFCE7,stroke:#16A34A,stroke-width:2px,color:#0F172A
+  classDef gate fill:#FEE2E2,stroke:#DC2626,stroke-width:2px,color:#0F172A
+  classDef store fill:#FEF9C3,stroke:#CA8A04,stroke-width:2px,color:#0F172A
+  classDef ext fill:#F1F5F9,stroke:#475569,stroke-width:2px,color:#0F172A
+  class CLI,WEB ui
+  class SRV srv
+  class EXE,PROMPT,ROUTER,TOOLS core
+  class GEM,FAKE model
+  class GATE gate
+  class STORE store
+  class SHARED ext

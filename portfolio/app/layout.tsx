@@ -17,7 +17,7 @@ const inter = Inter({
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
-  weight: ["800"],
+  weight: ["600", "800"],
   display: "swap",
   variable: "--font-display",
 });
@@ -79,7 +79,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${interTight.variable} ${geistMono.variable} font-sans selection:bg-fg/10`}>
+      <body className={`${inter.variable} ${interTight.variable} ${geistMono.variable} font-sans`}>
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:bg-bg focus:px-3 focus:py-2 focus:text-fg"

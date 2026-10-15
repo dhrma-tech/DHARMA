@@ -43,7 +43,7 @@ function Photo({ className }: { className: string }) {
         fill
         priority
         sizes={PHOTO_SIZES}
-        className="object-cover grayscale transition-[filter] duration-300 hover:grayscale-0"
+        className="object-cover grayscale transition-[filter] duration-150 group-hover:grayscale-0 group-active:grayscale-0"
       />
     </span>
   );
@@ -57,7 +57,7 @@ export default function Hero({ now }: { now: NowData }) {
       className="relative flex min-h-[100svh] flex-col justify-between pt-20"
     >
       <HeroScrollFade className="flex flex-1 items-center">
-        <h1 className="w-full font-display font-extrabold leading-[0.9] tracking-[-0.05em] text-fg">
+        <h1 className="group w-full font-display font-extrabold leading-[0.9] tracking-[-0.05em] text-fg">
           <span className="sr-only">{site.shortName}</span>
 
           {/* Desktop: one line, photo inline between the names, ~88% of viewport. */}
@@ -97,13 +97,13 @@ export default function Hero({ now }: { now: NowData }) {
         </p>
 
         <div className="flex flex-col items-start gap-1 leading-tight sm:items-end">
-          <ThemeToggle />
           {now.availability && (
             <p className="flex items-center gap-2 text-[13px] text-fg">
               <span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent" />
               {now.availability}
             </p>
           )}
+          <ThemeToggle />
         </div>
       </div>
     </section>

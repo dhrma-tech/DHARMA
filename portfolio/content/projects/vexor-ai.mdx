@@ -5,7 +5,7 @@ description: An interactive web platform that acts as a sparring partner for you
 year: 2025
 dates: Sep 2025 – Oct 2025
 status: Shipped
-stack: [JavaScript]
+stack: [JavaScript, Node.js, Express, Groq · Llama 3.3 70B, isolated-vm, Monaco]
 category: AI
 featured: false
 order: 6
@@ -14,9 +14,9 @@ repo: https://github.com/dhrma-tech/Vexor.AI
 
 ## Problem
 
-It's easy to write code that works on the happy path and miss the edge cases.
+Writing thorough unit tests is tedious, and under pressure (a hackathon, a deadline) edge cases are the first thing to go. You test the inputs you had in mind when you wrote the function, which are exactly the ones least likely to break it.
 
-<Todo>Expand the problem in your own words.</Todo>
+I wanted a sparring partner: paste a function, get a test suite written by someone trying to break it, and see straight away which tests it fails.
 
 ## What I built
 
@@ -24,14 +24,23 @@ An interactive web platform that acts as a sparring partner for your code. Paste
 
 ## Architecture
 
-<Todo>Add a diagram of the request flow: editor → API → model → sandboxed test run → results.</Todo>
+<Figure src="/projects/vexor-ai/request-flow.png" darkSrc="/projects/vexor-ai/request-flow.dark.png" alt="Vexor request flow: the Monaco editor posts code to the Express API, Groq's Llama 3.3 70B writes Jest tests, they run in an isolated-vm sandbox, and the score and results come back." width={2168} height={1586} />
 
 ## Key decisions
 
-<Todo>Describe the sandboxing approach and how you handled API calls and deployment.</Todo>
+- **Sandbox.** User code and the generated tests run inside `isolated-vm`: a separate V8 isolate with no Node APIs, so no file system, network or `require`. It's capped at 128 MB of memory and 10 seconds, and disposed after every run.
+- **A mini Jest instead of real Jest.** Jest can't run inside an isolate, so the server injects a small runner that implements `describe`, `test` and the common matchers (`toBe`, `toEqual`, `toBeTruthy`, `toBeFalsy`, `toThrow`) and returns pass/fail per test as JSON.
+- **Personalities as prompt templates.** "Senior Engineer" writes balanced tests; "Drill Sergeant" goes after edge cases, invalid inputs and boundaries. Both tell the model to return only code and to ignore any instructions hidden in the user's code.
+- **Cleaning model output.** Markdown fences are stripped and the tests are run through Prettier before they execute, which catches most formatting noise from the model.
+- **API keys stay on the server.** The Groq key is read from the environment, and the server refuses AI requests with a clear error if it's missing. Generation runs on Llama 3.3 70B through Groq.
+- **Deployment.** The Express backend runs on Render's free tier from a `render.yaml` blueprint. The frontend is static files that call it.
 
 ## Results / what I learned
 
-A huge learning win in backend sandboxing, API handling, and deployment.
+A huge learning win in backend sandboxing, API handling, and deployment. It didn't finish perfectly, and the gaps taught me as much as the parts that worked.
 
-<Todo>Add specifics — what you'd do differently, any usage or results.</Todo>
+- **Run tests in a real runner.** The mini Jest covers five matchers and no async tests. Next time: real Jest in a short-lived container.
+- **Ask for structured output.** Stripping code fences from free text is fragile. A JSON response with the tests as a field is safer to parse.
+- **Harden the API before sharing it.** CORS is open and there's no rate limiting, so anyone could spend the API budget.
+- **Plan for cold starts.** On Render's free tier the first request after idle is slow, which hurts a tool whose whole point is instant feedback.
+- **More than JavaScript.** Only JavaScript is supported. Python is the obvious next language.

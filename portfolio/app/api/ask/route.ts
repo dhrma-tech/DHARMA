@@ -1,6 +1,6 @@
 import { CHAT_MODEL, getGenAI } from "@/lib/ai/gemini";
 import { SOURCES_HEADER, isRefusal } from "@/lib/ai/constants";
-import { SYSTEM_PROMPT, buildUserPrompt, sourceTitles } from "@/lib/ai/prompt";
+import { SYSTEM_PROMPT, buildUserPrompt, sourceLinks } from "@/lib/ai/prompt";
 import { retrieve } from "@/lib/ai/retrieve";
 import { getClientIp, hashIp, isSameOrigin, jsonError, parseJson, retryAfter } from "@/lib/http";
 import { logError } from "@/lib/log";
@@ -84,7 +84,7 @@ export async function POST(req: Request) {
       "Content-Type": "text/plain; charset=utf-8",
       "Cache-Control": "no-store",
       "X-Content-Type-Options": "nosniff",
-      [SOURCES_HEADER]: encodeURIComponent(JSON.stringify(sourceTitles(chunks))),
+      [SOURCES_HEADER]: encodeURIComponent(JSON.stringify(sourceLinks(chunks))),
     },
   });
 }

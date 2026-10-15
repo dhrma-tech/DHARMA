@@ -1,23 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { askSchema, contactSchema, slugSchema } from "@/lib/schemas";
-
-describe("contactSchema", () => {
-  const valid = { name: "Ada", email: "ada@example.com", message: "Hello there, nice site!" };
-
-  it("accepts a valid message and trims it", () => {
-    const r = contactSchema.parse({ ...valid, name: "  Ada  " });
-    expect(r.name).toBe("Ada");
-  });
-
-  it.each([
-    ["empty name", { ...valid, name: " " }],
-    ["bad email", { ...valid, email: "nope" }],
-    ["short message", { ...valid, message: "hi" }],
-    ["huge message", { ...valid, message: "x".repeat(4001) }],
-  ])("rejects %s", (_, input) => {
-    expect(contactSchema.safeParse(input).success).toBe(false);
-  });
-});
+import { askSchema, slugSchema } from "@/lib/schemas";
 
 describe("askSchema", () => {
   it("bounds question length", () => {

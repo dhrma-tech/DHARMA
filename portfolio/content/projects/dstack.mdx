@@ -14,9 +14,9 @@ repo: https://github.com/dhrma-tech/DSTACK
 
 ## Problem
 
-Going from a rough product idea to a shipped build with AI assistants tends to be ad hoc: planning, architecture, implementation, refinement and deployment happen in scattered prompts with no shared structure.
+Building with AI assistants is fast but shapeless. A solo developer or student goes from idea to code in one long chat: no written plan, no review, no QA, and nothing that stops you shipping something nobody checked. Every new session starts from zero, so the decisions you made yesterday are gone.
 
-<Todo>Rewrite the problem in your own words — who hits it, and why existing tools don't solve it.</Todo>
+Garry Tan's GStack showed a better shape: named, opinionated steps like `/office-hours`, `/review`, `/qa` and `/ship`. But it lives on top of Claude. I wanted the same discipline as a standalone, CLI-first tool with its own state, hard gates between stages, and Google's models underneath.
 
 ## What I built
 
@@ -30,14 +30,21 @@ A CLI-native, API-first workflow orchestration system that turns a rough product
 
 ## Architecture
 
-<Todo>Add an architecture diagram (e.g. /projects/dstack/architecture.png) showing the pipeline stages, the provider interface, and the CLI/API surfaces.</Todo>
+<Figure src="/projects/dstack/pipeline.png" darkSrc="/projects/dstack/pipeline.dark.png" alt="The DStack pipeline: plan, build and check, ship. /ship is blocked until QA and review pass and no artifact is stale." width={2168} height={1212} />
+
+<Figure src="/projects/dstack/architecture.png" darkSrc="/projects/dstack/architecture.dark.png" alt="How a skill runs: CLI or web UI, SkillExecutor, prompt built from prior artifacts, Gemini or fake provider, permission-gated tools, Zod-validated artifacts." width={2060} height={2940} />
+
+Every skill reads the artifacts of the skills before it, calls the model through one provider interface, runs its tools through a permission gate, and writes a versioned JSON artifact that the next skill reads. The web UI doesn't have its own copy of the logic. The server spawns the same CLI and streams its events back over SSE.
 
 ## Key decisions
 
 - **Offline fake provider.** The pipeline can run end to end without an API key, which keeps tests deterministic and lets anyone try it.
 - **CLI-native and API-first.** The same pipeline is reachable from the terminal and programmatically.
-
-<Todo>Add the trade-offs behind the monorepo layout and why Gemini was the first provider.</Todo>
+- **Artifacts are the contract between skills.** Each skill writes `latest.json` plus an append-only version, validated against a Zod schema. If validation fails, the run retries once with the errors fed back, then saves the result marked invalid instead of passing bad data down the pipeline.
+- **One shared contracts package.** `@dstack/shared` holds only types, Zod schemas and typed errors. The CLI, server and web app all import the same schemas, so what the CLI writes is exactly what the UI expects. The cost is build order: `shared` has to build before anything else will typecheck.
+- **All logic in `core`; thin CLI and server.** The server doesn't import `core` to run a skill. It spawns the CLI and turns its NDJSON events into SSE. The terminal and the browser then share one execution path, and a crashing run can't take the server down. The price is a process start per run and an event protocol to maintain.
+- **Why Gemini first.** I wanted DStack to stand on its own rather than be another layer on Claude. Gemini's two tiers map cleanly onto the work: Flash for quick skills (`/office-hours`, `/ship`, `/browse`), Pro for the heavy reasoning (`/autoplan`, `/review`, `/qa`). It can also return JSON against a schema, which fits artifacts that get validated anyway.
+- **Provider-agnostic from day one.** Gemini sits behind a `Provider` interface that streams chunks. The fake provider proves the seam is real, so adding Claude or OpenAI means writing one more class, not a rewrite.
 
 ## Results / what I learned
 

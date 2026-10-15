@@ -30,7 +30,23 @@ export function buildUserPrompt(question: string, chunks: ContextChunk[]): strin
   return `<context>\n${buildContext(chunks)}\n</context>\n\n<question>\n${neutralise(question)}\n</question>`;
 }
 
-/** Unique source chip labels, in retrieval order. */
-export function sourceTitles(chunks: ContextChunk[]): string[] {
-  return Array.from(new Set(chunks.map((c) => c.title)));
+export interface SourceLink {
+  title: string;
+  href: string;
+}
+
+/** Where a source id lives on the site: project/post pages, otherwise its home-page section. */
+export function sourceHref(source: string): string {
+  const [kind, slug] = source.split(":");
+  if (kind === "project" && slug) return `/projects/${slug}`;
+  if (kind === "post" && slug) return `/writing/${slug}`;
+  if (kind === "experience") return "/#work";
+  return `/#${kind}`;
+}
+
+/** Unique source chips with links, in retrieval order. */
+export function sourceLinks(chunks: ContextChunk[]): SourceLink[] {
+  const seen = new Map<string, SourceLink>();
+  for (const c of chunks) if (!seen.has(c.source)) seen.set(c.source, { title: c.title, href: sourceHref(c.source) });
+  return Array.from(seen.values());
 }

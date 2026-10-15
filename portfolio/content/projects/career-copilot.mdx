@@ -1,11 +1,11 @@
 ---
 title: Career Copilot
-summary: Gemini career roadmaps
-description: A personalized, AI-powered website that guides students through their career and education journey using the Google Gemini API.
+summary: AI career roadmaps
+description: A personalized, AI-powered website that guides students through their career and education journey with an LLM (started on Gemini 1.5 Flash, now Groq Llama 3.1).
 year: 2025
 dates: Sep 2025 – Oct 2025
 status: Shipped
-stack: [Gemini API, CSS]
+stack: [JavaScript, Node.js, Express, Groq · Llama 3.1 8B, localStorage]
 category: AI
 featured: false
 order: 7
@@ -14,13 +14,11 @@ repo: https://github.com/dhrma-tech/career_copilot
 
 ## Problem
 
-Students often don't have a clear, personalized path through their career and education choices.
-
-<Todo>Expand the problem in your own words.</Todo>
+Most students pick a branch first and work out a career path later, from scattered videos, seniors' advice and generic "top 10 skills" lists. Those roadmaps ignore what you actually study and what you're actually interested in. Even a good plan stays a plan, because nothing turns it into small steps you can track.
 
 ## What I built
 
-A personalized, AI-powered website that guides students through their career and education journey using the Google Gemini API:
+A personalized, AI-powered website that guides students through their career and education journey with an LLM (started on Gemini 1.5 Flash, now Groq Llama 3.1):
 
 - A custom career roadmap.
 - Relevant course recommendations.
@@ -28,12 +26,22 @@ A personalized, AI-powered website that guides students through their career and
 
 ## Architecture
 
-<Todo>Add a diagram of how user input becomes a Gemini prompt, a roadmap, and tracked tasks.</Todo>
+<Figure src="/projects/career-copilot/flow.png" darkSrc="/projects/career-copilot/flow.dark.png" alt="Career Copilot flow: an onboarding form saves the profile locally, each dashboard tab sends it to a server-side prompt, the LLM returns HTML cards, and tasks are a separate local to-do list." width={1120} height={2514} />
 
 ## Key decisions
 
-<Todo>Add the key prompt/product decisions and why.</Todo>
+- **Three fixed prompts, kept on the server.** The browser sends only the profile and which tab it wants: roadmap, courses or growth. It can't send its own prompt, and the API key never leaves the server.
+- **Course links are search URLs, not course URLs.** Models invent course links that don't exist. A search link on the recommended platform (for example, a Coursera search) always works.
+- **The model returns ready-made HTML.** That was the fastest route to a polished dashboard in hackathon time: no client-side rendering logic. The trade-off is trusting model output on the page (see lessons).
+- **No accounts; everything in `localStorage`.** No database and no sign-up, so a student is in within seconds and their data stays on their device. The cost is that nothing follows you to another device.
+- **A supportive tone, on purpose.** Every prompt asks for an encouraging voice, because the audience is students who are often unsure about their path.
+- **Switched from Gemini 1.5 Flash to Groq Llama 3.1 8B Instant** for faster responses.
 
 ## Results / what I learned
 
-<Todo>Add results and lessons.</Todo>
+Built in Sep–Oct 2025 as a hackathon project: an Express backend, a static frontend and an LLM working together end to end.
+
+- **Ask for data, not markup.** Rendering model-written HTML straight onto the page is fast but unsafe and hard to restyle. Today I'd ask for JSON and render it myself, with sanitising.
+- **Connect the plan to the action.** The roadmap and the task list are separate. Turning each roadmap step into tasks is the feature the product was really missing.
+- **Keep the docs honest.** The README still says Gemini after the switch to Groq. Small, but it's the first thing a reviewer checks.
+- **Know the trade-off of local-only.** `localStorage` made it frictionless and private, but a student loses everything on a new device.

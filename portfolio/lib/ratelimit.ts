@@ -12,7 +12,6 @@ export interface LimitRule {
 }
 
 export const RULES = {
-  contact: { name: "contact", limit: 3, windowSeconds: 60 * 60 },
   askIp: { name: "ask-ip", limit: 10, windowSeconds: 60 * 60, failClosed: true },
   askGlobal: { name: "ask-global", limit: 200, windowSeconds: 24 * 60 * 60, failClosed: true },
   view: { name: "view", limit: 1, windowSeconds: 60 * 60 },

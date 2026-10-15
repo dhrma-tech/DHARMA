@@ -1,21 +1,30 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState, type FormEvent } from "react";
 import { track } from "@vercel/analytics";
 import { SOURCES_HEADER, STARTER_QUESTIONS, isRefusal } from "@/lib/ai/constants";
+import type { SourceLink } from "@/lib/ai/prompt";
 import { PREFILL_EVENT, type PrefillDetail } from "@/components/contact/prefill";
 
 type State =
   | { status: "idle" }
   | { status: "loading"; question: string }
-  | { status: "streaming" | "done"; question: string; answer: string; sources: string[] }
+  | { status: "streaming" | "done"; question: string; answer: string; sources: SourceLink[] }
   | { status: "error"; question: string; message: string };
 
-function readSources(res: Response): string[] {
+const isSourceLink = (s: unknown): s is SourceLink =>
+  typeof s === "object" &&
+  s !== null &&
+  typeof (s as SourceLink).title === "string" &&
+  typeof (s as SourceLink).href === "string" &&
+  (s as SourceLink).href.startsWith("/");
+
+function readSources(res: Response): SourceLink[] {
   try {
     const raw = res.headers.get(SOURCES_HEADER);
     const parsed = raw ? JSON.parse(decodeURIComponent(raw)) : [];
-    return Array.isArray(parsed) ? parsed.filter((s): s is string => typeof s === "string") : [];
+    return Array.isArray(parsed) ? parsed.filter(isSourceLink) : [];
   } catch {
     return [];
   }
@@ -128,8 +137,13 @@ export default function AskDharma() {
             {state.status === "done" && !refused && state.sources.length > 0 && (
               <ul className="mt-3 flex flex-wrap gap-2 font-mono text-[12px] text-muted" aria-label="Sources">
                 {state.sources.map((s) => (
-                  <li key={s} className="rounded bg-surface px-2 py-0.5 ring-1 ring-subtle">
-                    {s}
+                  <li key={s.href}>
+                    <Link
+                      href={s.href}
+                      className="inline-block rounded bg-surface px-2 py-0.5 ring-1 ring-subtle transition-colors hover:text-fg hover:ring-accent"
+                    >
+                      {s.title} →
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -146,9 +160,6 @@ export default function AskDharma() {
           </button>
         )}
       </div>
-      <p className="mt-4 font-mono text-[12px] text-muted">
-        AI answers from this site&apos;s content. It can be wrong — the case studies are the source of truth.
-      </p>
     </div>
   );
 }

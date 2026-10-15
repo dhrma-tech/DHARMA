@@ -51,7 +51,10 @@ describe("POST /api/ask", () => {
   it("streams a grounded answer with source chips and logs the query", async () => {
     const res = await POST(req(QUESTION));
     expect(res.status).toBe(200);
-    expect(JSON.parse(decodeURIComponent(res.headers.get(SOURCES_HEADER)!))).toEqual(["DStack", "About"]);
+    expect(JSON.parse(decodeURIComponent(res.headers.get(SOURCES_HEADER)!))).toEqual([
+      { title: "DStack", href: "/projects/dstack" },
+      { title: "About", href: "/#about" },
+    ]);
     expect(await res.text()).toBe("Dharma built DStack, a CLI.");
 
     expect(rpc).toHaveBeenCalledWith("match_chunks", expect.objectContaining({ match_count: 5 }));

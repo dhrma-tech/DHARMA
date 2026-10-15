@@ -14,9 +14,9 @@ repo: https://github.com/dhrma-tech/STEVE
 
 ## Problem
 
-A solo founder has to cover engineering, marketing, sales, design, support, ops, finance and legal at once.
+A solo founder has to be eight people at once: engineer, marketer, salesperson, designer, support, ops, finance and legal. Hiring isn't an option early on, so most of that work gets done badly or not at all.
 
-<Todo>Expand the problem in your own words — what breaks today, and for whom.</Todo>
+AI chat assistants give advice but don't do the work. They can't open the pull request, deploy the site, create the Stripe product or answer the customer. Autonomous agents that *can* act have the opposite problem: nobody checks them before they email a customer, spend money or delete something. STEVE is for solo founders and very small teams who want the work delegated without giving up the final say.
 
 ## What I built
 
@@ -31,14 +31,21 @@ A multi-AI agent orchestration platform: eight always-on AI departments (Enginee
 
 ## Architecture
 
-<Todo>Add an architecture diagram showing departments, the tool-use loop, approval gates, memory, and the GitHub/Vercel/Supabase/Stripe integrations.</Todo>
+<Figure src="/projects/steve/architecture.png" darkSrc="/projects/steve/architecture.dark.png" alt="STEVE: the Chief of Staff plans and assigns, eight department agents work through a durable run engine, every tool call passes a policy engine, and risky calls wait in the founder's approval inbox." width={2168} height={3234} />
+
+<Figure src="/projects/steve/approval-policy.png" darkSrc="/projects/steve/approval-policy.dark.png" alt="How STEVE decides each tool call: reads and internal writes run, destructive and external writes need approval unless pre-approved, messages and spending always ask." width={2168} height={868} />
 
 ## Key decisions
 
 - **Human-approval gates.** Agents propose; the founder approves before anything with real-world side effects runs.
-- **Per-agent memory.** Each department keeps its own persistent context instead of sharing one global prompt.
-
-<Todo>Add the reasoning behind these, plus any decisions about model choice, streaming, or tool design.</Todo>
+- **Risk comes from the call, not from the model's words.** One central table classifies every tool. Reads and internal writes run. Destructive and external writes need approval unless the founder pre-approved them. Contacting people and spending money ask *every* time, and no rule can waive that. A tool missing from the table defaults to asking, so a new tool can never run silently. Because the decision never reads text the model wrote, a prompt injection can't talk its way past it.
+- **Injected content tightens the rules.** Tool output is screened for prompt-injection patterns. A suspicious hit is wrapped as untrusted data, logged for the founder, and removes every convenience for the rest of the run: no run grants, no auto-approve rules, no trusted mode.
+- **Per-agent memory.** Each department keeps its own persistent memory, so prompts stay focused and one agent's notes don't leak into another's work.
+- **Model tiers in config, not code.** The Chief of Staff plans on Opus at high effort. Department agents and the Reviewer work on Sonnet. Quick agent-to-agent questions go to Haiku. Each tier has a fallback model, environment variables can override any of them, and a single agent can be pinned to a model. The router also supports OpenAI and a local Ollama fallback.
+- **Everything streams.** Every run event goes to an event log and streams to the UI over SSE. Approvals raised deep inside a delegated child agent bubble up to the run the founder is watching.
+- **Tools built for retries and runaways.** All agents in one delegation tree share limits on depth, cycles and budget, so a chain of agents stops as a whole. An identical outside-effect call inside one run is skipped, because a repeat is almost always a retry, not intent. Every call has a timeout and lands in the audit log with the agent as the actor.
+- **Structured handoffs.** A delegated run ends by calling `finish_run` with a fixed shape that the engine validates and adds the real cost to, so the parent agent gets data it can act on, not a paragraph.
+- **Durable runs.** Runs advance one step per job on a database-backed queue, so they survive restarts and can stay paused for as long as an approval takes.
 
 ## Results / what I learned
 

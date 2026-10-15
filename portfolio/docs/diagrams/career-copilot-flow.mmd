@@ -1,0 +1,26 @@
+%%{init: {'theme':'base','fontFamily':'Inter','flowchart':{'wrappingWidth':320},'themeVariables':{'fontFamily':'Inter','fontSize':'16px','lineColor':'#64748B','primaryTextColor':'#0F172A','clusterBkg':'#FAFAF9','clusterBorder':'#CBD5E1','edgeLabelBackground':'#FFFFFF'}}}%%
+flowchart TB
+  U(["Student"]) --> FORM["Onboarding form<br/>name · academic field · interests"]
+  FORM --> LS[("localStorage<br/>user profile")]
+  LS --> TABS{"Dashboard tab"}
+  TABS -- "Roadmap · Courses · Growth" --> API["Express · POST /generate<br/>{ user, type }"]
+  API --> TPL["Server-side prompt template<br/>one per tab · supportive tone"]
+  TPL --> LLM["LLM<br/>Gemini 1.5 Flash → Groq Llama 3.1 8B"]
+  LLM --> HTML["Raw HTML from the model<br/>set via innerHTML, unsanitised"]
+  HTML --> VIEW["Dashboard<br/>roadmap steps · course cards · articles"]
+  TABS -- "Tasks sidebar" --> TASKS["Manual to-do list<br/>add · tick · delete"]
+  TASKS --> LS2[("localStorage<br/>tasks per user")]
+  classDef ui fill:#DBEAFE,stroke:#2563EB,stroke-width:2px,color:#0F172A
+  classDef srv fill:#EDE9FE,stroke:#7C3AED,stroke-width:2px,color:#0F172A
+  classDef core fill:#FFEDD5,stroke:#FF4F00,stroke-width:2px,color:#0F172A
+  classDef model fill:#DCFCE7,stroke:#16A34A,stroke-width:2px,color:#0F172A
+  classDef gate fill:#FEE2E2,stroke:#DC2626,stroke-width:2px,color:#0F172A
+  classDef store fill:#FEF9C3,stroke:#CA8A04,stroke-width:2px,color:#0F172A
+  classDef ext fill:#F1F5F9,stroke:#475569,stroke-width:2px,color:#0F172A
+  class U ext
+  class FORM,TABS,VIEW ui
+  class API,TPL srv
+  class LLM model
+  class HTML gate
+  class LS,LS2 store
+  class TASKS core

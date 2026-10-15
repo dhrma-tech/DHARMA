@@ -1,0 +1,27 @@
+%%{init: {'theme':'base','fontFamily':'Inter','flowchart':{'wrappingWidth':320},'themeVariables':{'fontFamily':'Inter','fontSize':'16px','lineColor':'#64748B','primaryTextColor':'#0F172A','clusterBkg':'#FAFAF9','clusterBorder':'#CBD5E1','edgeLabelBackground':'#FFFFFF','actorBkg':'#FFEDD5','actorBorder':'#FF4F00','actorLineColor':'#94A3B8','signalColor':'#334155','sequenceNumberColor':'#FFFFFF'}}}%%
+sequenceDiagram
+  autonumber
+  actor U as Developer
+  participant E as Monaco editor<br/>static frontend
+  participant S as Express API<br/>Render
+  participant L as Groq<br/>Llama 3.3 70B
+  participant V as isolated-vm<br/>128 MB · 10 s
+  rect rgb(219,234,254)
+  U->>E: Paste function, pick personality
+  E->>S: POST /assert {code, personality, functionName}
+  end
+  rect rgb(237,233,254)
+  S->>S: Fill prompt template<br/>engineer / drill_sergeant
+  S->>L: Chat completion<br/>temp 0.5 · 2048 tokens
+  L-->>S: Jest test code
+  S->>S: Strip markdown fences<br/>format with Prettier
+  end
+  rect rgb(254,226,226)
+  S->>V: User code + tests + mini-Jest runner
+  V-->>S: Pass / fail per test (JSON)
+  S->>S: Dispose isolate
+  end
+  rect rgb(220,252,231)
+  S-->>E: score · passed · failed · output · tests
+  E-->>U: Colour-coded score + results
+  end

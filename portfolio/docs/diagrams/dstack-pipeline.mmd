@@ -1,0 +1,31 @@
+%%{init: {'theme':'base','fontFamily':'Inter','flowchart':{'wrappingWidth':320},'themeVariables':{'fontFamily':'Inter','fontSize':'16px','lineColor':'#64748B','primaryTextColor':'#0F172A','clusterBkg':'#FAFAF9','clusterBorder':'#CBD5E1','edgeLabelBackground':'#FFFFFF'}}}%%
+flowchart TB
+  subgraph PLAN["1 · Plan"]
+    direction LR
+    IDEA(["Rough idea"]) --> OH["/office-hours<br/>project brief"] --> AP["/autoplan<br/>phased plan"] --> PR["/plan-ceo-review<br/>/plan-eng-review"] --> DS["/design-consultation<br/>/design-review"]
+  end
+  subgraph CHECK["2 · Build and check"]
+    direction LR
+    BUILD["You build<br/>with your AI assistant"] --> RV["/review<br/>git diff"] --> QA["/qa<br/>tests · browser · static"] --> G1{"QA + review passed<br/>and artifacts fresh?"}
+    G1 -- "no" --> FIX["/investigate<br/>fix, re-run"]
+    G1 -- "yes" --> OK(["ready"])
+  end
+  subgraph SHIPG["3 · Ship"]
+    direction LR
+    SHIP["/ship<br/>pre-ship checklist"] --> DEP["/setup-deploy · /canary<br/>/land-and-deploy"] --> LIVE(["Shipped"])
+  end
+  PLAN --> CHECK
+  CHECK -- "gates pass" --> SHIPG
+  classDef ui fill:#DBEAFE,stroke:#2563EB,stroke-width:2px,color:#0F172A
+  classDef srv fill:#EDE9FE,stroke:#7C3AED,stroke-width:2px,color:#0F172A
+  classDef core fill:#FFEDD5,stroke:#FF4F00,stroke-width:2px,color:#0F172A
+  classDef model fill:#DCFCE7,stroke:#16A34A,stroke-width:2px,color:#0F172A
+  classDef gate fill:#FEE2E2,stroke:#DC2626,stroke-width:2px,color:#0F172A
+  classDef store fill:#FEF9C3,stroke:#CA8A04,stroke-width:2px,color:#0F172A
+  classDef ext fill:#F1F5F9,stroke:#475569,stroke-width:2px,color:#0F172A
+  class IDEA,LIVE,OK ext
+  class OH,AP,PR,DS core
+  class BUILD ui
+  class RV,QA srv
+  class G1,FIX gate
+  class SHIP,DEP model

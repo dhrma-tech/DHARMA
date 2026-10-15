@@ -15,10 +15,24 @@ function Todo({ children }: { children: ReactNode }) {
   );
 }
 
-function Figure({ src, alt, width = 1280, height = 720 }: { src: string; alt: string; width?: number; height?: number }) {
+/** `darkSrc`: optional dark-theme version (same size), swapped in by the `.dark` class. */
+function Figure({
+  src,
+  darkSrc,
+  alt,
+  width = 1280,
+  height = 720,
+}: {
+  src: string;
+  darkSrc?: string;
+  alt: string;
+  width?: number;
+  height?: number;
+}) {
   return (
     <figure className="my-6">
-      <Image src={src} alt={alt} width={width} height={height} className="h-auto w-full border border-subtle" />
+      <Image src={src} alt={alt} width={width} height={height} className={darkSrc ? "h-auto w-full dark:hidden" : "h-auto w-full"} />
+      {darkSrc && <Image src={darkSrc} alt={alt} width={width} height={height} className="hidden h-auto w-full dark:block" />}
       {alt && <figcaption className="mt-2 font-mono text-[13px] text-muted">{alt}</figcaption>}
     </figure>
   );

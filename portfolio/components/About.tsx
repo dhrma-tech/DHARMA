@@ -13,6 +13,11 @@ export default function About() {
   return (
     <Section id="about" label="about">
       <p className="text-fg">{site.about}</p>
+      <p className="mt-4">
+        <TextLink href="/about" className="underline decoration-subtle hover:decoration-accent">
+          Read the long version →
+        </TextLink>
+      </p>
       <p className="mt-4 font-mono text-[13px] text-muted">
         {site.location} · {site.college} · {site.discipline}
       </p>

@@ -1,0 +1,30 @@
+%%{init: {'theme':'base','fontFamily':'Inter','flowchart':{'wrappingWidth':320},'themeVariables':{'fontFamily':'Inter','fontSize':'16px','lineColor':'#64748B','primaryTextColor':'#0F172A','clusterBkg':'#FAFAF9','clusterBorder':'#CBD5E1','edgeLabelBackground':'#FFFFFF'}}}%%
+flowchart TB
+  F(["Founder"]) --> CANVAS["Orbit canvas + side panel<br/>Next.js 16 · React 19"]
+  CANVAS --> COS["Chief of Staff<br/>plans goals, assigns steps<br/>planner tier · Opus"]
+  COS --> DEPTS["8 department agents<br/>Engineering · Marketing · Sales · Design<br/>Support · Ops · Finance · Legal<br/>worker tier · Sonnet · triage questions on Haiku"]
+  DEPTS -- "delegate_agent" --> DEPTS
+  DEPTS -- "finish_run handoff" --> REV["Reviewer<br/>checks acceptance criteria"]
+  DEPTS --> ENG["Run engine<br/>durable job queue · tool-use loop ≤ 20 turns<br/>shared run-tree limits: depth · cycles · budget"]
+  ENG <--> MEM[("AgentMemory<br/>per agent")]
+  ENG -- "every event" --> FEED["Live run feed<br/>SSE stream"]
+  ENG --> POL{"Policy engine<br/>risk from tool + arguments"}
+  POL -- "read · internal write<br/>allow" --> TOOLS["15 tool modules · sandbox ⇄ live adapters<br/>GitHub · Vercel · Supabase · Stripe · email · support<br/>Postiz · Apify · web search · monitoring<br/>files · tasks · plans · memory · delegate"]
+  POL -- "destructive · external<br/>comms · spend" --> INBOX["Approval inbox<br/>founder approves or denies"]
+  INBOX -- "approved" --> TOOLS
+  TOOLS -- "output screened<br/>for prompt injection" --> ENG
+  TOOLS --> AUD[("Audit log<br/>every tool call")]
+  classDef ui fill:#DBEAFE,stroke:#2563EB,stroke-width:2px,color:#0F172A
+  classDef srv fill:#EDE9FE,stroke:#7C3AED,stroke-width:2px,color:#0F172A
+  classDef core fill:#FFEDD5,stroke:#FF4F00,stroke-width:2px,color:#0F172A
+  classDef model fill:#DCFCE7,stroke:#16A34A,stroke-width:2px,color:#0F172A
+  classDef gate fill:#FEE2E2,stroke:#DC2626,stroke-width:2px,color:#0F172A
+  classDef store fill:#FEF9C3,stroke:#CA8A04,stroke-width:2px,color:#0F172A
+  classDef ext fill:#F1F5F9,stroke:#475569,stroke-width:2px,color:#0F172A
+  class F ext
+  class CANVAS,FEED ui
+  class INBOX,POL gate
+  class COS,DEPTS,REV core
+  class MEM,AUD store
+  class ENG srv
+  class TOOLS model
