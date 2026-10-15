@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import SiteHeader from "@/components/nav/SiteHeader";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import Ask from "@/components/Ask";
 import WorkExperience from "@/components/WorkExperience";
 import Projects from "@/components/Projects";
 import Now from "@/components/Now";
@@ -48,6 +49,7 @@ export default async function Home() {
       <main id="main" className="min-h-screen">
         <Hero now={now} />
         <About />
+        <Ask />
         <Now now={now} />
         <Projects />
         <WorkExperience />

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { clsx as cn } from "clsx";
+import { PREFILL_EVENT, type PrefillDetail } from "@/components/contact/prefill";
 
 type Status = { state: "idle" } | { state: "sending" } | { state: "sent" } | { state: "error"; message: string };
 
@@ -11,6 +12,24 @@ const LABEL = "block font-mono text-[13px] text-muted";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>({ state: "idle" });
+  const [prefill, setPrefill] = useState<PrefillDetail | null>(null);
+  const messageRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const onPrefill = (e: Event) => {
+      setStatus({ state: "idle" });
+      setPrefill((e as CustomEvent<PrefillDetail>).detail);
+    };
+    window.addEventListener(PREFILL_EVENT, onPrefill);
+    return () => window.removeEventListener(PREFILL_EVENT, onPrefill);
+  }, []);
+
+  useEffect(() => {
+    const el = messageRef.current;
+    if (!prefill || !el) return;
+    el.focus({ preventScroll: true });
+    el.setSelectionRange(el.value.length, el.value.length);
+  }, [prefill]);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -25,6 +44,7 @@ export default function ContactForm() {
       });
       if (res.ok) {
         form.reset();
+        setPrefill(null);
         setStatus({ state: "sent" });
         return;
       }
@@ -65,8 +85,19 @@ export default function ContactForm() {
       </div>
       <label className={LABEL}>
         message
-        <textarea name="message" required minLength={10} maxLength={4000} rows={4} className={cn(FIELD, "resize-y")} />
+        <textarea
+          ref={messageRef}
+          key={prefill?.message}
+          defaultValue={prefill?.message}
+          name="message"
+          required
+          minLength={10}
+          maxLength={4000}
+          rows={4}
+          className={cn(FIELD, "resize-y")}
+        />
       </label>
+      <input type="hidden" name="source" value={prefill?.source ?? "contact-form"} />
       {/* Honeypot: off-screen and skipped by keyboard and screen readers. */}
       <div aria-hidden="true" className="absolute left-[-9999px] h-px w-px overflow-hidden">
         <label>
