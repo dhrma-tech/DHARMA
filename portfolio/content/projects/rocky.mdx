@@ -1,0 +1,41 @@
+---
+title: Rocky
+summary: Local-first AI work memory
+description: A local-first, open-source memory and approval layer for your work. It remembers your meetings, lectures, messages, documents and apps, answers with verified citations, and waits for your approval before anything is written.
+year: 2026
+dates: Oct 2026 – Present
+status: In progress
+stack: [TypeScript, Electron, Ollama, Claude API, SQLite, MCP]
+category: AI
+featured: true
+order: 1
+repo: https://github.com/dhrma-tech/Rocky
+---
+
+## Problem
+
+Work context is scattered across meetings, lectures, chats, docs and a dozen apps. Hosted AI agents can search some of it, but they send everything to the cloud, guess when they can't find an answer, and act on your apps without asking.
+
+## What I built
+
+An open-source, local-first memory and approval layer aimed at students and developers. It runs on your own machine as a CLI, a local web UI and a desktop app for Windows, macOS and Linux.
+
+- **Verified Ask.** Every answer cites its sources and quotes the passage it came from. If nothing supports an answer, Rocky says "Not found in your sources" instead of guessing.
+- **Runs locally.** Local embeddings and a local answer model through Ollama, with a `--local-only` mode that never leaves the machine. An optional Anthropic key gives faster answers, with spending capped by default.
+- **12 connectors** (experimental): Gmail, Google Calendar, Google Drive, GitHub, Notion, Slack, Linear, Todoist, Asana, Apple Calendar (CalDAV), PostHog and Notion Calendar, plus imports for WhatsApp, Discord, Instagram, X and LinkedIn exports.
+- **Meetings and lectures.** Local transcription with whisper, then extracted summaries, commitments and decisions. A browser recorder captures "You" and "Others" as separate channels.
+- **Approval queue and audit log.** Actions that write to your apps wait as drafts until you approve the exact payload. Every step lands in an append-only, hash-chained audit log.
+- **MCP server.** Claude Code and other MCP clients can query your memory through read-only tools.
+- Notebooks, study tools, routines and daily briefs, and opt-in store encryption.
+
+## Key decisions
+
+- **Local-first by default.** Data, embeddings and the answer model live on your machine; the cloud is opt-in.
+- **Cite or refuse.** An answer without a supporting passage is treated as a failure, not a best guess.
+- **Approve before write.** Nothing touches your apps until you approve the exact payload.
+- **Isolated connectors.** Connector code and tokens run in a separate host process, and each connector can only reach the hosts it declares. Secrets go into the OS keychain.
+- **Honest support tiers.** Each connector is labelled supported, experimental or link-only, based on how it is actually tested.
+
+## Results / what I learned
+
+V1 is complete as early software: verified Ask over local files, 12 connectors, meeting and lecture capture, the approval queue, the audit log and the MCP server all work from the CLI and the local web UI. The desktop app builds for all three platforms and has been tried by hand on Windows.

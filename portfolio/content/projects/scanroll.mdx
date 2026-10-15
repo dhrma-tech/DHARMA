@@ -3,13 +3,29 @@ title: ScanRoll
 summary: QR attendance for colleges
 description: Open-source QR code attendance system for colleges with student, teacher, HOD, and admin roles.
 year: 2026
-dates: Apr 2026 – Present
-status: In progress
+dates: Apr 2026 – May 2026
+status: Shipped
 stack: [TypeScript, Supabase]
 category: Web
 featured: false
-order: 7
+order: 10
 repo: https://github.com/dhrma-tech/ScanRoll
 ---
 
-Open-source QR Code Attendance System for colleges with student, teacher, HOD, and admin roles, Supabase backend, QR validation, attendance records, and reports.
+## Problem
+
+Manual roll calls waste teaching time, and proxy attendance breaks trust in the records.
+
+## What I built
+
+An open-source QR attendance platform for colleges that automates the whole workflow, from a student walking into the room to the final report.
+
+- **Fast:** attendance is marked in under 10 seconds.
+- **Anti-proxy:** QR codes rotate every 30 seconds, backed by a 3-layer check and proxy flagging.
+- **Role-based:** separate dashboards for students, teachers, HODs and admins.
+- **Secure:** Supabase Auth and Row Level Security.
+- **Real-time:** live session tracking and automated reports.
+
+## Results / what I learned
+
+The hard part was real-time data and access control across four user roles in one system. It's open source and free for any institution to use.

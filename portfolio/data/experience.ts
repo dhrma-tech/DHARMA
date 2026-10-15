@@ -44,7 +44,7 @@ export const experience: Experience[] = [
     roles: [
       {
         title: "Design Team Member",
-        dates: "Sep 2025 – Present",
+        dates: "Sep 2025 – Sep 2026",
         description:
           "Creating clean, engaging visuals for events, social media, and student activities while supporting the team with creative design ideas and consistent branding.",
       },
@@ -55,7 +55,7 @@ export const experience: Experience[] = [
     roles: [
       {
         title: "School Captain",
-        dates: "Jun 2022 – Apr 2023",
+        dates: "Sep 2022 – Sep 2023",
         description:
           "Led student activities, coordinated with teachers and students, managed school events, and represented the student body.",
       },

@@ -1,13 +1,13 @@
 import type { Now } from "@/types/content";
 
 // Fallback for the Now section when Supabase is unreachable; live copy lives in now_items/site_settings.
-// TODO: rewrite these bullets in your own words — they're seeded from project descriptions.
 export const now: Now = {
-  building: "STEVE",
+  building: "Rocky",
   items: [
-    "Building STEVE — eight always-on AI departments that run the work of a startup while the founder approves.",
-    "Shipping DStack, a CLI that turns a rough idea into a structured AI-assisted build pipeline.",
+    "Building Rocky — a local-first, open-source AI memory for your work that cites every answer and waits for approval before it writes.",
+    "Taking DStack to a full release, about a month out.",
+    "Pitching VOLTIC, an AI layer for machine and sensor data, at Eureka 2026 (IIT Bombay).",
     "Leading the powertrain team for Team Gladiator's ATVC build.",
   ],
-  updated: "2026-10-14",
+  updated: "2026-10-15",
 };

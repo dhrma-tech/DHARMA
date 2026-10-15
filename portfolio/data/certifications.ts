@@ -15,4 +15,9 @@ export const certifications: Certification[] = [
     url: "https://www.coursera.org/account/accomplishments/verify/ECF4C6I0DOGV",
     logo: "/logos/michigan.png",
   },
+  {
+    name: "Gemini Kickstart Workshop",
+    issuer: "Google",
+    date: "Sep 2025",
+  },
 ];

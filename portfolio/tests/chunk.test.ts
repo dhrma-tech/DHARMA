@@ -46,7 +46,7 @@ describe("buildSourceDocs", () => {
   it("covers site data and every project, without Todo text", () => {
     const docs = buildSourceDocs();
     const sources = docs.map((d) => d.source);
-    expect(sources).toEqual(expect.arrayContaining(["about", "now", "experience", "stack", "project:dstack"]));
+    expect(sources).toEqual(expect.arrayContaining(["about", "now", "experience", "education", "stack", "project:dstack", "project:rocky", "project:voltic"]));
     for (const d of docs) expect(d.text).not.toMatch(/<Todo>/);
     expect(docs.find((d) => d.source === "project:dstack")?.title).toBe("DStack");
   });

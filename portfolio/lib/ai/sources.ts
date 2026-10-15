@@ -7,6 +7,7 @@ import { site } from "@/data/site";
 import { experience } from "@/data/experience";
 import { stack } from "@/data/stack";
 import { certifications } from "@/data/certifications";
+import { education } from "@/data/education";
 import { now } from "@/data/now";
 
 export interface SourceDoc {
@@ -59,6 +60,11 @@ export function buildSourceDocs(root: string = process.cwd()): SourceDoc[] {
       text: experience
         .map((e) => `${e.org}\n${e.roles.map((r) => `- ${r.title} (${r.dates}): ${r.description}`).join("\n")}`)
         .join("\n\n"),
+    },
+    {
+      source: "education",
+      title: "Education",
+      text: `Education:\n${education.map((e) => `- ${e.degree}, ${e.school} (${e.dates})${e.detail ? `. ${e.detail}` : ""}`).join("\n")}`,
     },
     {
       source: "stack",

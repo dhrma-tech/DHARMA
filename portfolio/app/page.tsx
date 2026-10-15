@@ -9,6 +9,7 @@ import Now from "@/components/Now";
 import Writing from "@/components/Writing";
 import Stack from "@/components/Stack";
 import Certifications from "@/components/Certifications";
+import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { getNavItems } from "@/lib/nav";
@@ -53,6 +54,7 @@ export default async function Home() {
         <Now now={now} />
         <Projects />
         <WorkExperience />
+        <Education />
         <Writing posts={posts} />
         <Stack />
         <Certifications />
