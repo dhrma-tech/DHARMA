@@ -72,7 +72,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
         <article className="mt-10">
           <header>
-            <h1 className="font-display text-5xl font-extrabold leading-[0.95] tracking-[-0.04em] text-fg">
+            <h1 className="break-words font-display text-4xl font-extrabold sm:text-5xl leading-[0.95] tracking-[-0.04em] text-fg">
               {project.title}
             </h1>
             <p className="mt-4 text-[17px] text-fg">{project.description}</p>
