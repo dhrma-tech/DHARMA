@@ -38,6 +38,18 @@ function Figure({
   );
 }
 
+/**
+ * Places its `Figure` children side by side (stacked on narrow screens),
+ * cropped to a shared 16:10 so photos of different shapes line up.
+ */
+function FigureRow({ children }: { children: ReactNode }) {
+  return (
+    <div className="my-6 grid grid-cols-1 gap-4 sm:grid-cols-2 [&>figure]:my-0 [&_img]:aspect-[16/10] [&_img]:object-cover">
+      {children}
+    </div>
+  );
+}
+
 export const mdxComponents = {
   h2: (props: ComponentPropsWithoutRef<"h2">) => (
     <h2 className="mb-3 mt-12 font-mono text-[14px] font-normal lowercase text-muted" {...props} />
@@ -59,4 +71,5 @@ export const mdxComponents = {
   ),
   Todo,
   Figure,
+  FigureRow,
 };

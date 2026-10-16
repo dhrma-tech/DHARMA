@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Inter_Tight } from "next/font/google";
+import { Inter, Inter_Tight, Instrument_Serif } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
@@ -20,6 +20,15 @@ const interTight = Inter_Tight({
   weight: ["600", "800"],
   display: "swap",
   variable: "--font-display",
+});
+
+// Only used for the header wordmark.
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: "italic",
+  display: "swap",
+  variable: "--font-serif",
 });
 
 // Geist Mono isn't in next/font/google on Next 14, so it's self-hosted (SIL OFL, see app/fonts).
@@ -79,7 +88,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${interTight.variable} ${geistMono.variable} font-sans`}>
+      <body className={`${inter.variable} ${interTight.variable} ${instrumentSerif.variable} ${geistMono.variable} font-sans`}>
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:bg-bg focus:px-3 focus:py-2 focus:text-fg"

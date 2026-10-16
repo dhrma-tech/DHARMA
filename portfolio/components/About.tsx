@@ -15,7 +15,7 @@ export default function About() {
       <p className="text-fg">{site.about}</p>
       <p className="mt-4">
         <TextLink href="/about" className="underline decoration-subtle hover:decoration-accent">
-          Read the long version →
+          Still curious? →
         </TextLink>
       </p>
       <p className="mt-4 font-mono text-[13px] text-muted">

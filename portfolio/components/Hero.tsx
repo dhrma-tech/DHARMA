@@ -1,10 +1,12 @@
-import Image from "next/image";
+import Link from "next/link";
 import { site } from "@/data/site";
+import { getAllProjects } from "@/lib/content";
 import type { NowData } from "@/lib/now";
 import ThemeToggle from "@/components/ThemeToggle";
 import FitText from "@/components/hero/FitText";
 import CodeTyping from "@/components/hero/CodeTyping";
 import HeroScrollFade from "@/components/hero/HeroScrollFade";
+import HeroPhoto from "@/components/hero/HeroPhoto";
 
 const [FIRST, LAST] = site.shortName.split(" ");
 // Load animations are CSS keyframes (see tailwind.config) so the name is visible
@@ -35,17 +37,29 @@ function Word({ text, offset }: { text: string; offset: number }) {
 }
 
 function Photo({ className }: { className: string }) {
+  return <HeroPhoto alt={PHOTO_ALT} sizes={PHOTO_SIZES} className={className} />;
+}
+
+/** Links to the project whose title matches `name`; plain text if none does. */
+function NowBuilding({ name }: { name: string }) {
+  const project = getAllProjects().find((p) => p.title.toLowerCase() === name.trim().toLowerCase());
+  const content = (
+    <>
+      <CodeTyping />
+      <span className="block leading-tight">
+        <span className="block text-[13px] text-muted">Now building</span>
+        <span className="block text-[15px] font-medium text-fg underline-offset-4 decoration-accent decoration-2 group-hover:underline">
+          {name}
+          {project && <span aria-hidden="true"> →</span>}
+        </span>
+      </span>
+    </>
+  );
+  if (!project) return <div className="flex items-center gap-3">{content}</div>;
   return (
-    <span className={`relative overflow-hidden bg-subtle animate-pop motion-reduce:animate-none ${className}`}>
-      <Image
-        src="/profile.jpeg"
-        alt={PHOTO_ALT}
-        fill
-        priority
-        sizes={PHOTO_SIZES}
-        className="object-cover grayscale transition-[filter] duration-150 group-hover:grayscale-0 group-active:grayscale-0"
-      />
-    </span>
+    <Link href={`/projects/${project.slug}`} className="group flex items-center gap-3 justify-self-start">
+      {content}
+    </Link>
   );
 }
 
@@ -84,13 +98,7 @@ export default function Hero({ now }: { now: NowData }) {
 
       <div className="grid grid-cols-1 gap-6 px-6 pb-8 pt-10 sm:grid-cols-2 sm:items-end sm:gap-x-10 sm:px-10 lg:grid-cols-[1fr_2fr_1fr]">
         {/* sm–lg: positioning gets its own row; lg+: three columns. */}
-        <div className="flex items-center gap-3">
-          <CodeTyping />
-          <div className="leading-tight">
-            <p className="text-[13px] text-muted">Now building</p>
-            <p className="text-[15px] font-medium text-fg">{now.building}</p>
-          </div>
-        </div>
+        <NowBuilding name={now.building} />
 
         <p className="max-w-sm text-[15px] font-medium leading-snug text-fg sm:order-first sm:col-span-2 sm:max-w-md lg:order-none lg:col-span-1 lg:max-w-sm lg:justify-self-center">
           {site.positioning}
