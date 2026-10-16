@@ -3,7 +3,7 @@ import type { Education } from "@/types/content";
 export const education: Education[] = [
   {
     school: "Government College of Engineering, Ratnagiri",
-    degree: "B.Tech, Mechatronics, Robotics and Automation Engineering",
+    degree: "B.Tech, Major in Mechatronics Engineering and Minor in Electronics Engineering",
     dates: "Sep 2025 – Present",
     detail: "Clubs, hackathons and bootcamps.",
   },
