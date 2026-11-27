@@ -2,6 +2,7 @@ import type { NowData } from "@/lib/now";
 import Section from "@/components/ui/Section";
 import { getGitHubActivity } from "@/lib/github";
 import { relativeTime } from "@/lib/time";
+import LiveFromOne from "@/components/LiveFromOne";
 
 export default async function Now({ now }: { now: NowData }) {
   const activity = await getGitHubActivity();
@@ -17,6 +18,8 @@ export default async function Now({ now }: { now: NowData }) {
       <p className="mt-4 font-mono text-[13px] text-muted">
         Updated: <time dateTime={now.updated}>{now.updated}</time>
       </p>
+
+      <LiveFromOne />
 
       {commits.length > 0 && (
         <div className="mt-10">

@@ -1,5 +1,7 @@
 const isDev = process.env.NODE_ENV !== 'production';
 const supabaseOrigin = process.env.NEXT_PUBLIC_SUPABASE_URL ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).origin : '';
+// "Live from ONE" widget reads ONE's public stats endpoint from the browser.
+const oneOrigin = process.env.NEXT_PUBLIC_ONE_URL ? new URL(process.env.NEXT_PUBLIC_ONE_URL).origin : '';
 
 // 'unsafe-inline' scripts are needed for next-themes' no-flash script and JSON-LD
 // (no nonce middleware on a static site). Vercel Analytics/Speed Insights load from
@@ -11,7 +13,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://images.unsplash.com https://vercel.live https://vercel.com",
   "font-src 'self' data:",
-  `connect-src 'self' https://va.vercel-scripts.com https://vitals.vercel-insights.com https://vercel.live ${supabaseOrigin}${isDev ? ' ws:' : ''}`.trim(),
+  `connect-src 'self' https://va.vercel-scripts.com https://vitals.vercel-insights.com https://vercel.live ${supabaseOrigin} ${oneOrigin}${isDev ? ' ws:' : ''}`.trim(),
   'frame-src https://vercel.live',
   "frame-ancestors 'none'",
   "base-uri 'self'",
